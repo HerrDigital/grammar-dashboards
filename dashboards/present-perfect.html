@@ -1,0 +1,1212 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Present Perfect – Digitales Übungsdashboard (Kl. 7)</title>
+  <style>
+    :root{
+      /* LIGHT THEME (Petrol + Grey) */
+      --bg:#f4f6f8;
+      --panel:#ffffff;
+      --panel2:#f0f2f4;
+      --text:#1b2430;
+      --muted:#5b6674;
+      --line:#d7dde3;
+
+      --petrol:#167d7f;          /* main */
+      --petrolSoft:#e7f4f4;      /* soft highlight */
+      --petrolSoft2:#d6eeee;
+
+      --ok:#1f9d55;              /* green */
+      --okBg:#e8f7ee;
+
+      --bad:#d62839;             /* red */
+      --badBg:#fdecee;
+
+      --shadow: 0 8px 20px rgba(17, 34, 51, .08);
+      --radius:16px;
+
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg) 55%);
+      min-height:100vh;
+    }
+
+    header{
+      max-width:1160px;
+      margin:0 auto;
+      padding:18px 18px 8px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    h1{
+      margin:0;
+      font-size:22px;
+      letter-spacing:.2px;
+    }
+
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      background:var(--panel);
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius:999px;
+      box-shadow:var(--shadow);
+    }
+
+    /* --- NEW: header branding --- */
+    .header-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .brand-logo{
+      height:34px;
+      width:auto;
+      opacity:.65;
+      filter: saturate(0.95);
+    }
+    @media (max-width: 600px){
+      .brand-logo{ height:30px; opacity:.55; }
+    }
+
+    label{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    select, input[type="text"], textarea{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      color:var(--text);
+      padding:9px 10px;
+      border-radius:10px;
+      outline:none;
+    }
+
+    select{cursor:pointer}
+
+    main{
+      max-width:1160px;
+      margin:0 auto;
+      padding:10px 18px 34px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:16px;
+    }
+
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+
+    .card h2{margin:0 0 10px; font-size:16px}
+    .card h3{margin:0 0 8px; font-size:14px; color:var(--muted); font-weight:700}
+
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+
+    .btn{
+      border:1px solid var(--line);
+      background:var(--panel);
+      color:var(--text);
+      padding:9px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:.15s transform,.15s background;
+      font-size:13px;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      background: var(--petrol);
+      border-color: var(--petrol);
+      color:#fff;
+    }
+    .btn.ghost{
+      background:transparent;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:var(--petrolSoft);
+      border:1px solid var(--petrolSoft2);
+      color:var(--petrol);
+      font-size:12px;
+      margin-right:8px;
+      margin-bottom:8px;
+      font-weight:600;
+    }
+
+    .hr{height:1px; background:var(--line); margin:14px 0}
+
+    .score{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      background: linear-gradient(180deg, var(--petrolSoft) 0%, #fff 70%);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px 14px;
+    }
+
+    .tag{
+      padding:3px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    .task{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      background:#fff;
+      margin-top:12px;
+    }
+
+    .task-header{
+      display:flex;
+      gap:10px;
+      justify-content:space-between;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+
+    .task-title{font-weight:800; font-size:14px}
+    .task-desc{color:var(--muted); font-size:13px; margin:6px 0 0}
+
+    .q{
+      padding:12px 0;
+      border-top:1px dashed var(--line);
+    }
+    .q:first-child{border-top:none; padding-top:0}
+
+    .q label{
+      display:block;
+      margin-bottom:8px;
+      color:var(--text);
+      font-weight:650;
+      font-size:13px;
+    }
+
+    .small{font-size:12px; color:var(--muted)}
+    .mono{font-family:var(--mono)}
+
+    .mc{
+      display:grid;
+      gap:8px;
+      margin-top:6px;
+    }
+
+    .opt{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 10px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:var(--panel2);
+      cursor:pointer;
+      transition:.12s background, .12s border-color;
+    }
+    .opt input{accent-color:var(--petrol)}
+
+    .feedback{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .hidden{display:none !important}
+
+    /* correctness highlighting */
+    .is-correct{
+      background: var(--petrolSoft) !important;
+      border-color: var(--petrolSoft2) !important;
+    }
+    .is-wrong{
+      background: var(--badBg) !important;
+      border-color: #f6c6cd !important;
+    }
+
+    input.correct, textarea.correct{
+      border-color: rgba(31,157,85,.55) !important;
+      background: var(--okBg) !important;
+    }
+    input.wrong, textarea.wrong{
+      border-color: rgba(214,40,57,.55) !important;
+      background: var(--badBg) !important;
+    }
+
+    .okTxt{color:var(--ok); font-weight:800}
+    .badTxt{color:var(--bad); font-weight:800}
+
+    .sectionHint{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+    .count{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    /* --- NEW: footer with subtle spotify link (no CTA) --- */
+    .footer{
+      max-width:1160px;
+      margin:16px auto 28px;
+      padding:0 18px;
+    }
+    .footer-inner{
+      display:flex;
+      justify-content:flex-end;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      font-size:12px;
+      color:var(--muted);
+      border-top:1px solid var(--line);
+      padding-top:12px;
+    }
+    .footer-inner a{
+      color:var(--petrol);
+      text-decoration:none;
+      border-bottom:1px dotted rgba(22,125,127,.45);
+    }
+    .footer-inner a:hover{
+      border-bottom-style:solid;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="title">
+    <h1>Present Perfect – Digitales Übungsdashboard</h1>
+    <p class="sub">Übersichtlich · 3 Niveaustufen · Selbstkontrolle · Ergebnisse farbig markiert (Petrol/Grün)</p>
+  </div>
+
+  <!-- NEW: toolbar + logo grouped -->
+  <div class="header-right">
+    <div class="toolbar" role="region" aria-label="Einstellungen">
+      <label for="level">Niveau:</label>
+      <select id="level">
+        <option value="1">Niveau 1 (leicht)</option>
+        <option value="2" selected>Niveau 2 (Standard)</option>
+        <option value="3">Niveau 3 (anspruchsvoll)</option>
+      </select>
+
+      <button class="btn ghost" id="btnSave" title="Speichern">💾 Speichern</button>
+      <button class="btn ghost" id="btnReset">↩︎ Zurücksetzen</button>
+    </div>
+
+    <!-- Firmenlogo (dezent, ohne Link) -->
+    <img class="brand-logo"
+         src="https://i.ibb.co/M5NS6qnJ/Chat-GPT-Image-24-Nov-2025-15-48-13.png"
+         alt="Firmenlogo" />
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+    <section class="card" aria-label="Aufgabenbereich">
+
+      <div class="score" aria-label="Übersicht">
+        <div>
+          <strong>Dein Stand:</strong>
+          <div class="small">Bearbeite die Aufgaben → klicke <span class="mono">Prüfen</span> → korrekte Antworten werden farbig markiert.</div>
+        </div>
+        <div class="row">
+          <span class="tag">Punkte: <span id="points">0</span>/<span id="maxPoints">0</span></span>
+          <span class="tag">Erfolg: <span id="percent">0</span>%</span>
+        </div>
+      </div>
+
+      <!-- TASK 0: Info -->
+      <div class="task" id="task0">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Merkkasten</div>
+            <div class="task-desc">
+              Bildung: <span class="mono">have/has + verb form 3</span> · Negation: <span class="mono">haven’t/hasn’t</span> · Frage: <span class="mono">Have/Has + subject + V3?</span>
+            </div>
+          </div>
+          <div class="row">
+            <button class="btn ghost" data-action="toggleHelp" data-target="help0">Merkkasten anzeigen</button>
+          </div>
+        </div>
+        <div id="help0" class="feedback hidden">
+          <div><span class="pill">I/you/we/they → have</span> <span class="pill">he/she/it → has</span></div>
+          <div class="hr"></div>
+          <div><strong>Signalwörter (Song):</strong> <span class="mono">ever · never · just · already · yet</span></div>
+          <div class="small">Tipp: Present Perfect = Vergangenheit, die <strong>jetzt noch wichtig</strong> ist.</div>
+        </div>
+      </div>
+
+      <!-- TASK 1: Statements (MC) 10 items -->
+      <div class="task" id="task1">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 1: Aussagen – have oder has? (10)</div>
+            <div class="task-desc">Wähle die richtige Form. Nach dem Prüfen werden korrekte Sätze petrol/grün markiert.</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" data-action="check" data-task="1">Prüfen</button>
+            <button class="btn ghost" data-action="solution" data-task="1">Musterlösung</button>
+          </div>
+        </div>
+        <div class="sectionHint">
+          <div class="small">Regel: he/she/it → <strong>has</strong> · sonst → <strong>have</strong></div>
+          <div class="count">10 Items</div>
+        </div>
+
+        <!-- level 1 -->
+        <div class="q" data-level="1" id="t1_l1"></div>
+        <!-- level 2 -->
+        <div class="q" data-level="2" id="t1_l2"></div>
+        <!-- level 3 -->
+        <div class="q" data-level="3" id="t1_l3"></div>
+
+        <div id="fb1" class="feedback hidden"></div>
+      </div>
+
+      <!-- TASK 2: Negations 10 items (text) -->
+      <div class="task" id="task2">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 2: Verneinungen – haven’t/hasn’t (10)</div>
+            <div class="task-desc">Schreibe den Satz negativ. Nach dem Prüfen werden richtige Antworten markiert.</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" data-action="check" data-task="2">Prüfen</button>
+            <button class="btn ghost" data-action="solution" data-task="2">Musterlösung</button>
+          </div>
+        </div>
+        <div class="sectionHint">
+          <div class="small">Form: <span class="mono">haven’t/hasn’t + Verb 3</span> (Verb bleibt gleich!)</div>
+          <div class="count">10 Items</div>
+        </div>
+
+        <div class="q" data-level="1" id="t2_l1"></div>
+        <div class="q" data-level="2" id="t2_l2"></div>
+        <div class="q" data-level="3" id="t2_l3"></div>
+
+        <div id="fb2" class="feedback hidden"></div>
+      </div>
+
+      <!-- TASK 3: Questions 10 items (text) -->
+      <div class="task" id="task3">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 3: Fragen – Have/Has … ? (10)</div>
+            <div class="task-desc">Bilde die Frage. Nach dem Prüfen werden richtige Antworten markiert.</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" data-action="check" data-task="3">Prüfen</button>
+            <button class="btn ghost" data-action="solution" data-task="3">Musterlösung</button>
+          </div>
+        </div>
+        <div class="sectionHint">
+          <div class="small">Wortstellung: <span class="mono">Have/Has + subject + Verb 3 … ?</span></div>
+          <div class="count">10 Items</div>
+        </div>
+
+        <div class="q" data-level="1" id="t3_l1"></div>
+        <div class="q" data-level="2" id="t3_l2"></div>
+        <div class="q" data-level="3" id="t3_l3"></div>
+
+        <div id="fb3" class="feedback hidden"></div>
+      </div>
+
+      <!-- TASK 4: Verb form 3 (10 items) -->
+      <div class="task" id="task4">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 4: Verbform 3 (Past Participle) – Song-Outro (10)</div>
+            <div class="task-desc">Trage die 3. Form ein. Nach dem Prüfen werden richtige Antworten markiert.</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" data-action="check" data-task="4">Prüfen</button>
+            <button class="btn ghost" data-action="solution" data-task="4">Musterlösung</button>
+          </div>
+        </div>
+        <div class="sectionHint">
+          <div class="small">Tipp: go–went–gone, write–wrote–written, speak–spoke–spoken …</div>
+          <div class="count">10 Items</div>
+        </div>
+
+        <div class="q" data-level="1" id="t4_l1"></div>
+        <div class="q" data-level="2" id="t4_l2"></div>
+        <div class="q" data-level="3" id="t4_l3"></div>
+
+        <div id="fb4" class="feedback hidden"></div>
+      </div>
+
+      <!-- TASK 5: Free writing (reduced) -->
+      <div class="task" id="task5">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 5: Your Turn (kurz)</div>
+            <div class="task-desc">Schreibe eigene Sätze – mit Selbstkontroll-Checkliste (Struktur + Signalwort).</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" data-action="check" data-task="5">Prüfen</button>
+            <button class="btn ghost" data-action="solution" data-task="5">Beispiel</button>
+          </div>
+        </div>
+
+        <div class="q" data-level="1">
+          <label>Schreibe <strong>2</strong> Sätze im Present Perfect (mit <span class="mono">just/already/never</span>):</label>
+          <textarea data-id="t5_l1_txt" rows="4" style="width:100%" placeholder="1) I have ...&#10;2) She has ..."></textarea>
+        </div>
+
+        <div class="q" data-level="2">
+          <label>Schreibe <strong>3</strong> Sätze: 2 Aussagen + 1 Verneinung (mit Signalwort):</label>
+          <textarea data-id="t5_l2_txt" rows="5" style="width:100%" placeholder="Statements + Negation ..."></textarea>
+        </div>
+
+        <div class="q" data-level="3">
+          <label>Schreibe <strong>3</strong> Zeilen wie im Song: 1 Aussage + 1 Verneinung + 1 Frage:</label>
+          <textarea data-id="t5_l3_txt" rows="5" style="width:100%" placeholder="Line 1...&#10;Line 2...&#10;Line 3...?"></textarea>
+        </div>
+
+        <div id="fb5" class="feedback hidden"></div>
+      </div>
+
+    </section>
+
+    <aside class="card" aria-label="Song & Schnellhilfe">
+      <h2>Schnellhilfe (Song)</h2>
+      <div class="pill">have/has + verb form 3</div>
+      <div class="pill">haven’t/hasn’t (neg.)</div>
+      <div class="pill">Have/Has … ? (questions)</div>
+
+      <div class="hr"></div>
+      <h3>Chorus (Erinnerung)</h3>
+      <div class="feedback">
+        <div class="mono">I have tried, you have known,</div>
+        <div class="mono">She has written, they have shown.</div>
+        <div class="mono">Use have or has and verb form three…</div>
+      </div>
+
+      <div class="hr"></div>
+      <h3>Dashboard-Steuerung</h3>
+      <div class="row">
+        <button class="btn" id="btnCheckAll">Alles prüfen</button>
+        <button class="btn ghost" id="btnShowAll">Alle Lösungen anzeigen</button>
+      </div>
+
+      <div class="hr"></div>
+      <div class="feedback">
+        <strong>Hinweis:</strong> Eingaben werden lokal im Browser gespeichert (localStorage).
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- NEW: subtle footer with artist link -->
+<div class="footer" aria-label="Footer">
+  <div class="footer-inner">
+    <span>Song-Hinweis:</span>
+    <a href="https://open.spotify.com/intl-de/artist/7IYyo3ycDI6HOa5M5TB62F"
+       target="_blank"
+       rel="noopener">
+      Grammar &amp; The Grooves auf Spotify
+    </a>
+  </div>
+</div>
+
+<script>
+/* -------------------------------
+   CONTENT (10 Items each)
+--------------------------------- */
+
+const TASKS = {
+  // Task 1: have/has MC (10)
+  1: {
+    1: [
+      {subj:"I", v3:"tried", rest:"this song before.", correct:"have"},
+      {subj:"She", v3:"written", rest:"the chorus.", correct:"has"},
+      {subj:"They", v3:"shown", rest:"the dance.", correct:"have"},
+      {subj:"He", v3:"climbed", rest:"the highest hill.", correct:"has"},
+      {subj:"We", v3:"begun", rest:"the track.", correct:"have"},
+      {subj:"You", v3:"known", rest:"this rule.", correct:"have"},
+      {subj:"It", v3:"worked", rest:"well today.", correct:"has"},
+      {subj:"My friends", v3:"played", rest:"the song.", correct:"have"},
+      {subj:"Tom", v3:"missed", rest:"the bus.", correct:"has"},
+      {subj:"I", v3:"learned", rest:"the tense.", correct:"have"},
+    ],
+    2: [
+      {subj:"I", v3:"climbed", rest:"the hill already.", correct:"have"},
+      {subj:"She", v3:"made", rest:"it back.", correct:"has"},
+      {subj:"We", v3:"heard", rest:"the chorus.", correct:"have"},
+      {subj:"He", v3:"found", rest:"his keys.", correct:"has"},
+      {subj:"They", v3:"shown", rest:"me the moves.", correct:"have"},
+      {subj:"It", v3:"started", rest:"to snow.", correct:"has"},
+      {subj:"You", v3:"tried", rest:"this exercise.", correct:"have"},
+      {subj:"My class", v3:"learned", rest:"Present Perfect.", correct:"has"},
+      {subj:"Anna", v3:"written", rest:"a verse.", correct:"has"},
+      {subj:"We", v3:"finished", rest:"task one.", correct:"have"},
+    ],
+    3: [
+      {subj:"He", v3:"looked for", rest:"his keys all day.", correct:"has"},
+      {subj:"We", v3:"heard", rest:"what you will say.", correct:"have"},
+      {subj:"She", v3:"already", rest:"finished the track.", correct:"has", special:"already"},
+      {subj:"They", v3:"never", rest:"been to London.", correct:"have", special:"never"},
+      {subj:"It", v3:"just", rest:"started.", correct:"has", special:"just"},
+      {subj:"You", v3:"ever", rest:"sung in public.", correct:"have", special:"ever"},
+      {subj:"Tom", v3:"not", rest:"done his homework.", correct:"has", special:"not"},
+      {subj:"I", v3:"not", rest:"seen that movie.", correct:"have", special:"not"},
+      {subj:"My parents", v3:"already", rest:"known the news.", correct:"have", special:"already"},
+      {subj:"Sara", v3:"just", rest:"broken the glass.", correct:"has", special:"just"},
+    ]
+  },
+
+  // Task 2: Negations (10) input -> full sentence
+  2: {
+    1: [
+      {pos:"I have tried the song.", neg:"I haven't tried the song."},
+      {pos:"She has written the chorus.", neg:"She hasn't written the chorus."},
+      {pos:"He has found his keys.", neg:"He hasn't found his keys."},
+      {pos:"We have heard the chorus.", neg:"We haven't heard the chorus."},
+      {pos:"They have shown the dance.", neg:"They haven't shown the dance."},
+      {pos:"It has started.", neg:"It hasn't started."},
+      {pos:"You have learned the rule.", neg:"You haven't learned the rule."},
+      {pos:"Tom has missed the train.", neg:"Tom hasn't missed the train."},
+      {pos:"My friends have played the song.", neg:"My friends haven't played the song."},
+      {pos:"I have finished the task.", neg:"I haven't finished the task."},
+    ],
+    2: [
+      {pos:"I have already begun the track.", neg:"I haven't already begun the track."},
+      {pos:"She has just made it back.", neg:"She hasn't just made it back."},
+      {pos:"He has found his keys today.", neg:"He hasn't found his keys today."},
+      {pos:"We have heard the news.", neg:"We haven't heard the news."},
+      {pos:"They have shown me the moves.", neg:"They haven't shown me the moves."},
+      {pos:"It has worked well.", neg:"It hasn't worked well."},
+      {pos:"You have tried this exercise.", neg:"You haven't tried this exercise."},
+      {pos:"My class has learned the tense.", neg:"My class hasn't learned the tense."},
+      {pos:"Anna has written a verse.", neg:"Anna hasn't written a verse."},
+      {pos:"We have finished task two.", neg:"We haven't finished task two."},
+    ],
+    3: [
+      {pos:"She has finished the track.", neg:"She hasn't finished the track yet."},
+      {pos:"He has found his keys.", neg:"He hasn't found his keys yet."},
+      {pos:"They have been to London.", neg:"They have never been to London."},
+      {pos:"I have seen that movie.", neg:"I haven't seen that movie yet."},
+      {pos:"We have started the lesson.", neg:"We haven't started the lesson yet."},
+      {pos:"Sara has broken the glass.", neg:"Sara hasn't broken the glass."},
+      {pos:"You have sung in public.", neg:"You have never sung in public."},
+      {pos:"It has snowed today.", neg:"It hasn't snowed today."},
+      {pos:"My parents have known the news.", neg:"My parents haven't known the news."},
+      {pos:"Tom has done his homework.", neg:"Tom hasn't done his homework yet."},
+    ]
+  },
+
+  // Task 3: Questions (10) input -> full question
+  3: {
+    1: [
+      {prompt:"you / ever / dance / in the rain", sol:"Have you ever danced in the rain?"},
+      {prompt:"she / ever / miss / a train", sol:"Has she ever missed a train?"},
+      {prompt:"you / try / this song", sol:"Have you tried this song?"},
+      {prompt:"he / climb / the hill", sol:"Has he climbed the hill?"},
+      {prompt:"they / show / the dance", sol:"Have they shown the dance?"},
+      {prompt:"it / start", sol:"Has it started?"},
+      {prompt:"you / hear / the chorus", sol:"Have you heard the chorus?"},
+      {prompt:"she / write / the chorus", sol:"Has she written the chorus?"},
+      {prompt:"we / begin / the track", sol:"Have we begun the track?"},
+      {prompt:"tom / find / his keys", sol:"Has Tom found his keys?"},
+    ],
+    2: [
+      {prompt:"she / already / write / the chorus", sol:"Has she already written the chorus?"},
+      {prompt:"he / just / begin / the track", sol:"Has he just begun the track?"},
+      {prompt:"they / ever / show / the moves", sol:"Have they ever shown the moves?"},
+      {prompt:"you / ever / sing / this song", sol:"Have you ever sung this song?"},
+      {prompt:"it / already / start", sol:"Has it already started?"},
+      {prompt:"we / just / finish / task one", sol:"Have we just finished task one?"},
+      {prompt:"anna / already / write / a verse", sol:"Has Anna already written a verse?"},
+      {prompt:"your class / learn / Present Perfect", sol:"Has your class learned Present Perfect?"},
+      {prompt:"you / hear / what he said", sol:"Have you heard what he said?"},
+      {prompt:"they / try / this exercise", sol:"Have they tried this exercise?"},
+    ],
+    3: [
+      {prompt:"you / finish / your homework / yet", sol:"Have you finished your homework yet?"},
+      {prompt:"she / ever / write / a song", sol:"Has she ever written a song?"},
+      {prompt:"they / already / know / the news", sol:"Have they already known the news?"},
+      {prompt:"he / find / his keys / yet", sol:"Has he found his keys yet?"},
+      {prompt:"you / ever / be / to London", sol:"Have you ever been to London?"},
+      {prompt:"it / just / start / to snow", sol:"Has it just started to snow?"},
+      {prompt:"sara / break / the glass", sol:"Has Sara broken the glass?"},
+      {prompt:"your friends / show / you the moves", sol:"Have your friends shown you the moves?"},
+      {prompt:"tom / do / his homework / yet", sol:"Has Tom done his homework yet?"},
+      {prompt:"you / ever / miss / a train", sol:"Have you ever missed a train?"},
+    ]
+  },
+
+  // Task 4: Verb 3 (10) input -> past participle only (or in sentence for level3)
+  4: {
+    1: [
+      {base:"go – went –", sol:"gone"},
+      {base:"write – wrote –", sol:"written"},
+      {base:"speak – spoke –", sol:"spoken"},
+      {base:"break – broke –", sol:"broken"},
+      {base:"take – took –", sol:"taken"},
+      {base:"bring – brought –", sol:"brought"},
+      {base:"see – saw –", sol:"seen"},
+      {base:"eat – ate –", sol:"eaten"},
+      {base:"do – did –", sol:"done"},
+      {base:"begin – began –", sol:"begun"},
+    ],
+    2: [
+      {base:"go – went –", sol:"gone"},
+      {base:"know – knew –", sol:"known"},
+      {base:"find – found –", sol:"found"},
+      {base:"hear – heard –", sol:"heard"},
+      {base:"make – made –", sol:"made"},
+      {base:"write – wrote –", sol:"written"},
+      {base:"speak – spoke –", sol:"spoken"},
+      {base:"break – broke –", sol:"broken"},
+      {base:"take – took –", sol:"taken"},
+      {base:"begin – began –", sol:"begun"},
+    ],
+    3: [
+      {sent:"I have ___ to the studio. (go)", sol:"gone"},
+      {sent:"She has ___ a new verse. (write)", sol:"written"},
+      {sent:"They have ___ the moves. (show)", sol:"shown"},
+      {sent:"He has ___ his keys. (find)", sol:"found"},
+      {sent:"We have ___ the chorus. (hear)", sol:"heard"},
+      {sent:"It has ___ to snow. (start)", sol:"started"},
+      {sent:"You have ___ the rule. (know)", sol:"known"},
+      {sent:"Sara has ___ the glass. (break)", sol:"broken"},
+      {sent:"I have ___ that movie. (see)", sol:"seen"},
+      {sent:"We have ___ the track. (begin)", sol:"begun"},
+    ]
+  }
+};
+
+/* -------------------------------
+   Scoring (simple & clear)
+--------------------------------- */
+const MAX_POINTS = {
+  1: {1:10,2:10,3:10,4:10,5:3},
+  2: {1:10,2:10,3:10,4:10,5:4},
+  3: {1:10,2:10,3:10,4:10,5:5},
+};
+
+const $ = (sel, el=document) => el.querySelector(sel);
+const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+function normalize(s){
+  return (s ?? "")
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g," ")
+    .replace(/[“”]/g,'"')
+    .replace(/[’]/g,"'")
+    .replace(/\u00A0/g," ");
+}
+
+function getLevel(){ return Number($('#level').value); }
+
+function storageKey(){ return "pp_dashboard_light_petrol_v2"; }
+
+function saveState(){
+  const data = {};
+  $$('input[type="text"][data-id], textarea[data-id]').forEach(inp=>{
+    data[inp.dataset.id] = inp.value;
+  });
+  $$('input[type="radio"]').forEach(r=>{
+    if(r.checked) data[r.name] = r.value;
+  });
+  localStorage.setItem(storageKey(), JSON.stringify(data));
+}
+
+function loadState(){
+  const raw = localStorage.getItem(storageKey());
+  if(!raw) return;
+  let data;
+  try{ data = JSON.parse(raw) }catch{ return; }
+
+  $$('input[type="text"][data-id], textarea[data-id]').forEach(inp=>{
+    if(data[inp.dataset.id] !== undefined) inp.value = data[inp.dataset.id];
+  });
+  $$('input[type="radio"]').forEach(r=>{
+    if(data[r.name] !== undefined) r.checked = (data[r.name] === r.value);
+  });
+}
+
+function resetAll(){
+  if(!confirm("Wirklich alles zurücksetzen? (Alle Eingaben werden gelöscht.)")) return;
+  localStorage.removeItem(storageKey());
+  $$('input[type="text"][data-id], textarea[data-id]').forEach(inp=>{
+    inp.value="";
+    inp.classList.remove("correct","wrong");
+  });
+  $$('input[type="radio"]').forEach(r=>r.checked=false);
+  // remove MC highlights
+  $$('.opt').forEach(o=>o.classList.remove("is-correct","is-wrong"));
+  [1,2,3,4,5].forEach(clearFeedback);
+  pointsState = {1:0,2:0,3:0,4:0,5:0};
+  updateScore();
+}
+
+function showFeedback(task, html){
+  const fb = $('#fb'+task);
+  fb.classList.remove('hidden');
+  fb.innerHTML = html;
+}
+
+function clearFeedback(task){
+  const fb = $('#fb'+task);
+  fb.classList.add('hidden');
+  fb.innerHTML = "";
+}
+
+let pointsState = {1:0,2:0,3:0,4:0,5:0};
+
+function recomputeMax(){
+  const level = getLevel();
+  const max = Object.values(MAX_POINTS[level]).reduce((a,b)=>a+b,0);
+  $('#maxPoints').textContent = String(max);
+}
+
+function updateScore(){
+  const level = getLevel();
+  const pts = Object.values(pointsState).reduce((a,b)=>a+b,0);
+  const max = Object.values(MAX_POINTS[level]).reduce((a,b)=>a+b,0);
+  $('#points').textContent = String(pts);
+  $('#percent').textContent = String(max ? Math.round((pts/max)*100) : 0);
+}
+
+function award(task, pts){
+  pointsState[task] = pts;
+  updateScore();
+}
+
+/* -------------------------------
+   Render tasks (so structure stays clean)
+--------------------------------- */
+function renderTask1(level){
+  const wrap = $(`#t1_l${level}`);
+  wrap.innerHTML = "";
+  const items = TASKS[1][level];
+  items.forEach((it, idx)=>{
+    const qId = `t1_l${level}_q${idx+1}`;
+    const block = document.createElement("div");
+    block.style.marginBottom = "12px";
+    block.innerHTML = `
+      <label>${idx+1}) ${it.subj} ___ ${it.v3} ${it.rest}</label>
+      <div class="mc" data-qwrap="${qId}">
+        <label class="opt"><input type="radio" name="${qId}" value="have"> have</label>
+        <label class="opt"><input type="radio" name="${qId}" value="has"> has</label>
+      </div>
+    `;
+    wrap.appendChild(block);
+  });
+}
+
+function renderTask2(level){
+  const wrap = $(`#t2_l${level}`);
+  wrap.innerHTML = "";
+  const items = TASKS[2][level];
+  items.forEach((it, idx)=>{
+    const id = `t2_l${level}_q${idx+1}`;
+    const row = document.createElement("div");
+    row.style.marginBottom = "10px";
+    row.innerHTML = `
+      <label>${idx+1}) ${it.pos}</label>
+      <input type="text" data-id="${id}" placeholder="Schreibe den Satz negativ..." style="width:100%" />
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+function renderTask3(level){
+  const wrap = $(`#t3_l${level}`);
+  wrap.innerHTML = "";
+  const items = TASKS[3][level];
+  items.forEach((it, idx)=>{
+    const id = `t3_l${level}_q${idx+1}`;
+    const row = document.createElement("div");
+    row.style.marginBottom = "10px";
+    row.innerHTML = `
+      <label>${idx+1}) ${it.prompt}</label>
+      <input type="text" data-id="${id}" placeholder="Schreibe die Frage..." style="width:100%" />
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+function renderTask4(level){
+  const wrap = $(`#t4_l${level}`);
+  wrap.innerHTML = "";
+  const items = TASKS[4][level];
+  items.forEach((it, idx)=>{
+    const id = `t4_l${level}_q${idx+1}`;
+    const row = document.createElement("div");
+    row.style.marginBottom = "10px";
+    if(level < 3){
+      row.innerHTML = `
+        <label>${idx+1}) ${it.base} <input type="text" data-id="${id}" placeholder="3. Form" style="max-width:180px" /></label>
+      `;
+    } else {
+      row.innerHTML = `
+        <label>${idx+1}) ${it.sent.replace("___", `<input type="text" data-id="${id}" placeholder="Verb 3" style="max-width:160px" />`)}</label>
+      `;
+    }
+    wrap.appendChild(row);
+  });
+}
+
+/* -------------------------------
+   Level handling
+--------------------------------- */
+function setLevel(level){
+  $$('[data-level]').forEach(node=>{
+    node.classList.toggle('hidden', node.getAttribute('data-level') !== String(level));
+  });
+  recomputeMax();
+  loadState();
+  updateScore();
+}
+
+/* -------------------------------
+   Checking + highlighting
+--------------------------------- */
+function getRadio(name){
+  const el = document.querySelector(`input[type="radio"][name="${name}"]:checked`);
+  return el ? el.value : "";
+}
+
+function highlightMC(qName, correctValue){
+  const wrap = document.querySelector(`[data-qwrap="${qName}"]`);
+  if(!wrap) return;
+  const opts = wrap.querySelectorAll(".opt");
+  opts.forEach(opt=>{
+    const val = opt.querySelector("input")?.value;
+    opt.classList.remove("is-correct","is-wrong");
+    if(val === correctValue) opt.classList.add("is-correct");
+  });
+
+  // also show wrong selection as red
+  const chosen = getRadio(qName);
+  if(chosen && chosen !== correctValue){
+    opts.forEach(opt=>{
+      const val = opt.querySelector("input")?.value;
+      if(val === chosen) opt.classList.add("is-wrong");
+    });
+  }
+}
+
+function markInput(inp, ok){
+  inp.classList.remove("correct","wrong");
+  inp.classList.add(ok ? "correct" : "wrong");
+}
+
+function checkTask(task){
+  const level = getLevel();
+  saveState();
+  clearFeedback(task);
+
+  const taskEl = document.querySelector(`#task${task}`);
+  if(taskEl){
+    taskEl.querySelectorAll('input[type="text"][data-id], textarea[data-id]').forEach(inp=>{
+      inp.classList.remove("correct","wrong");
+    });
+    taskEl.querySelectorAll('.opt').forEach(o=>o.classList.remove("is-correct","is-wrong"));
+  }
+
+  if(task === 1){
+    const items = TASKS[1][level];
+    let got = 0;
+    items.forEach((it, idx)=>{
+      const qName = `t1_l${level}_q${idx+1}`;
+      const chosen = getRadio(qName);
+      if(chosen === it.correct) got++;
+      highlightMC(qName, it.correct);
+    });
+    award(1, got);
+    showFeedback(1, resultLine(got, 10, "Achte auf: he/she/it → has."));
+    return;
+  }
+
+  if(task === 2){
+    const items = TASKS[2][level];
+    let got = 0;
+    items.forEach((it, idx)=>{
+      const id = `t2_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      const ok = normalize(inp.value) === normalize(it.neg);
+      markInput(inp, ok);
+      if(ok) got++;
+    });
+    award(2, got);
+    showFeedback(2, resultLine(got, 10, "Form: haven’t/hasn’t + Verb 3. Tipp: yet oft am Ende."));
+    return;
+  }
+
+  if(task === 3){
+    const items = TASKS[3][level];
+    let got = 0;
+    items.forEach((it, idx)=>{
+      const id = `t3_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      const ok = normalize(inp.value) === normalize(it.sol);
+      markInput(inp, ok);
+      if(ok) got++;
+    });
+    award(3, got);
+    showFeedback(3, resultLine(got, 10, "Wortstellung: Have/Has + subject + Verb 3 + … ?"));
+    return;
+  }
+
+  if(task === 4){
+    const items = TASKS[4][level];
+    let got = 0;
+    items.forEach((it, idx)=>{
+      const id = `t4_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      const ok = normalize(inp.value) === normalize(it.sol);
+      markInput(inp, ok);
+      if(ok) got++;
+    });
+    award(4, got);
+    showFeedback(4, resultLine(got, 10, "Merke: go–went–gone, write–wrote–written, speak–spoke–spoken, break–broke–broken."));
+    return;
+  }
+
+  if(task === 5){
+    const txtId = level===1 ? "t5_l1_txt" : level===2 ? "t5_l2_txt" : "t5_l3_txt";
+    const ta = document.querySelector(`[data-id="${txtId}"]`);
+    const text = normalize(ta.value);
+
+    const hasHaveHas = /(have|has)\s+/.test(text);
+    const hasSignal = /(ever|never|just|already|yet)/.test(text);
+    const hasNeg = /(haven't|hasn't|have not|has not)\s+/.test(text);
+    const hasQ = /\?/.test(text);
+
+    let got = 0;
+    if(hasHaveHas) got++;
+    if(hasSignal) got++;
+    if(level>=2 && hasNeg) got++;
+    if(level===3 && hasQ) got++;
+
+    const max = MAX_POINTS[level][5];
+    got = Math.min(got, max);
+    award(5, got);
+
+    markInput(ta, got === max);
+
+    showFeedback(5, `
+      <strong>Selbstkontrolle:</strong> ${got}/${max}<br>
+      <div class="small">
+        ${hasHaveHas ? '<span class="okTxt">✔</span>' : '<span class="badTxt">✘</span>'} have/has benutzt<br>
+        ${hasSignal ? '<span class="okTxt">✔</span>' : '<span class="badTxt">✘</span>'} Signalwort benutzt<br>
+        ${level>=2 ? (hasNeg ? '<span class="okTxt">✔</span>' : '<span class="badTxt">✘</span>') + ' Verneinung (haven’t/hasn’t)<br>' : ''}
+        ${level===3 ? (hasQ ? '<span class="okTxt">✔</span>' : '<span class="badTxt">✘</span>') + ' Frage (…?)<br>' : ''}
+      </div>
+    `);
+  }
+}
+
+function resultLine(got, max, hint){
+  const ok = got === max;
+  return `
+    <strong>${ok ? '✅' : '⚠️'} Ergebnis:</strong> ${got}/${max}<br>
+    <span class="small">${ok ? 'Stark! Weiter zur nächsten Aufgabe.' : hint}</span>
+  `;
+}
+
+function solutionTask(task){
+  const level = getLevel();
+  clearFeedback(task);
+
+  if(task === 1){
+    const items = TASKS[1][level];
+    items.forEach((it, idx)=>{
+      const qName = `t1_l${level}_q${idx+1}`;
+      highlightMC(qName, it.correct);
+    });
+    showFeedback(1, `<strong>Musterlösung:</strong> Die korrekten Optionen sind petrol markiert.`);
+    return;
+  }
+
+  if(task === 2){
+    const items = TASKS[2][level];
+    items.forEach((it, idx)=>{
+      const id = `t2_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      inp.value = it.neg;
+      inp.classList.remove("wrong");
+      inp.classList.add("correct");
+    });
+    saveState();
+    showFeedback(2, `<strong>Musterlösung:</strong> Alle negativen Sätze wurden eingesetzt und markiert.`);
+    return;
+  }
+
+  if(task === 3){
+    const items = TASKS[3][level];
+    items.forEach((it, idx)=>{
+      const id = `t3_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      inp.value = it.sol;
+      inp.classList.remove("wrong");
+      inp.classList.add("correct");
+    });
+    saveState();
+    showFeedback(3, `<strong>Musterlösung:</strong> Alle Fragen wurden eingesetzt und markiert.`);
+    return;
+  }
+
+  if(task === 4){
+    const items = TASKS[4][level];
+    items.forEach((it, idx)=>{
+      const id = `t4_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      inp.value = it.sol;
+      inp.classList.remove("wrong");
+      inp.classList.add("correct");
+    });
+    saveState();
+    showFeedback(4, `<strong>Musterlösung:</strong> Alle Verbformen wurden eingesetzt und markiert.`);
+    return;
+  }
+
+  if(task === 5){
+    showFeedback(5, `<strong>Beispiel:</strong><br>
+      <div class="mono">
+        I have just listened to the song.<br>
+        She has never missed a train.<br>
+        Have you finished your homework yet?
+      </div>
+    `);
+  }
+}
+
+/* -------------------------------
+   Init render
+--------------------------------- */
+function init(){
+  [1,2,3].forEach(l=>{
+    renderTask1(l);
+    renderTask2(l);
+    renderTask3(l);
+    renderTask4(l);
+  });
+
+  loadState();
+  recomputeMax();
+  setLevel(getLevel());
+  updateScore();
+}
+
+/* -------------------------------
+   Events
+--------------------------------- */
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest('[data-action]');
+  if(btn){
+    const action = btn.dataset.action;
+
+    if(action === 'toggleHelp'){
+      const target = btn.dataset.target;
+      const el = document.getElementById(target);
+      el.classList.toggle('hidden');
+      btn.textContent = el.classList.contains('hidden') ? "Merkkasten anzeigen" : "Merkkasten ausblenden";
+      return;
+    }
+
+    if(action === 'check'){
+      const task = Number(btn.dataset.task);
+      checkTask(task);
+      return;
+    }
+
+    if(action === 'solution'){
+      const task = Number(btn.dataset.task);
+      solutionTask(task);
+      return;
+    }
+  }
+});
+
+document.addEventListener('input', (e)=>{
+  const t = e.target;
+  if(t.matches('input[type="text"][data-id], textarea[data-id]')) saveState();
+});
+
+document.addEventListener('change', (e)=>{
+  if(e.target.matches('input[type="radio"]')) saveState();
+});
+
+$('#level').addEventListener('change', ()=> setLevel(getLevel()));
+$('#btnSave').addEventListener('click', ()=> { saveState(); alert("Gespeichert ✅"); });
+$('#btnReset').addEventListener('click', resetAll);
+
+$('#btnCheckAll').addEventListener('click', ()=>{
+  [1,2,3,4,5].forEach(checkTask);
+});
+$('#btnShowAll').addEventListener('click', ()=>{
+  [1,2,3,4,5].forEach(solutionTask);
+});
+
+init();
+</script>
+</body>
+</html>

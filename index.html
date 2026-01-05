@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Present Perfect – Übungsdashboard (Klasse 7)</title>
+  <meta name="description" content="Present Perfect – digitales Übungsdashboard für Klasse 7 (3 Niveaustufen, Selbstkontrolle, Song-Bezug)." />
+  <style>
+    :root{
+      /* Petrol + Grey (light) – passend zu deinem Dashboard */
+      --bg:#f4f6f8;
+      --panel:#ffffff;
+      --panel2:#f0f2f4;
+      --text:#1b2430;
+      --muted:#5b6674;
+      --line:#d7dde3;
+
+      --petrol:#167d7f;
+      --petrolSoft:#e7f4f4;
+      --petrolSoft2:#d6eeee;
+
+      --shadow: 0 10px 26px rgba(17, 34, 51, .10);
+      --radius:18px;
+
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg) 58%);
+      min-height:100vh;
+    }
+
+    .wrap{
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 18px 18px 30px;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      padding: 10px 0 6px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .logo{
+      height:36px;
+      width:auto;
+      opacity:.7;
+      filter:saturate(.95);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:var(--petrolSoft);
+      border:1px solid var(--petrolSoft2);
+      color:var(--petrol);
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding: 18px;
+    }
+
+    .hero{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+      align-items:stretch;
+    }
+
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr}
+    }
+
+    h1{
+      margin:0 0 8px;
+      font-size:26px;
+      letter-spacing:.2px;
+    }
+
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .pillrow{margin-top:14px}
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:var(--panel2);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:12px;
+      font-weight:650;
+      margin-right:8px;
+      margin-bottom:8px;
+    }
+    .pill strong{color:var(--text)}
+
+    .actions{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      height:100%;
+      justify-content:center;
+    }
+
+    .btn{
+      display:inline-flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+      width:100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      cursor:pointer;
+      text-decoration:none;
+      font-weight:800;
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      background: var(--petrol);
+      border-color: var(--petrol);
+      color:#fff;
+      box-shadow: 0 10px 22px rgba(22,125,127,.25);
+    }
+    .btn.secondary{
+      background: var(--petrolSoft);
+      border-color: var(--petrolSoft2);
+      color: var(--petrol);
+    }
+
+    .hint{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.45;
+    }
+    .hint code{
+      font-family:var(--mono);
+      background:var(--panel2);
+      border:1px solid var(--line);
+      border-radius:10px;
+      padding:2px 6px;
+    }
+
+    .grid2{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+    }
+    @media (max-width: 920px){
+      .grid2{grid-template-columns:1fr}
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size:15px;
+    }
+
+    ul{margin:0; padding-left:18px; color:var(--muted); font-size:13px; line-height:1.55}
+    li{margin:6px 0}
+
+    footer{
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:12px;
+      align-items:center;
+    }
+
+    footer a{
+      color:var(--petrol);
+      text-decoration:none;
+      border-bottom:1px dotted rgba(22,125,127,.45);
+    }
+    footer a:hover{border-bottom-style:solid}
+
+    .right{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .tiny{
+      opacity:.95;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <img class="logo"
+             src="https://i.ibb.co/M5NS6qnJ/Chat-GPT-Image-24-Nov-2025-15-48-13.png"
+             alt="Firmenlogo" />
+        <span class="badge">Klasse 7 · Present Perfect</span>
+      </div>
+      <div class="right">
+        <span class="tiny">Digital üben · sofort starten</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="card">
+        <h1>Present Perfect – Übungsdashboard</h1>
+        <p class="sub">
+          Passend zum Song: <span class="mono">have/has + verb form 3</span> ·
+          mit Übungen zu <strong>Aussagen</strong>, <strong>Verneinungen</strong> und <strong>Fragen</strong>.
+          Du wählst dein Niveau (1–3) und prüfst direkt mit Selbstkontrolle.
+        </p>
+
+        <div class="pillrow">
+          <span class="pill"><strong>3 Niveaustufen</strong> (leicht · Standard · anspruchsvoll)</span>
+          <span class="pill"><strong>10 Items</strong> pro Aufgabentyp</span>
+          <span class="pill"><strong>Farbig markiert</strong> (Petrol/Grün)</span>
+          <span class="pill"><strong>Tablet-tauglich</strong> (iOS/Safari)</span>
+        </div>
+
+        <div class="hint">
+          Tipp fürs iPad: In Safari öffnen → Teilen → <strong>„Zum Home-Bildschirm“</strong>
+          (wie eine App). Fortschritt wird lokal gespeichert (<code>localStorage</code>).
+        </div>
+      </div>
+
+      <div class="card actions" aria-label="Start">
+        <!-- Dashboard-Link: Datei soll im gleichen Ordner liegen -->
+        <a class="btn primary" href="./dashboard.html">Dashboard öffnen</a>
+
+        <!-- Optional: wenn du später eine PDF/AB-Datei dazu legst -->
+        <!-- <a class="btn secondary" href="./material.pdf">Arbeitsblatt (PDF)</a> -->
+
+        <a class="btn secondary"
+           href="https://open.spotify.com/intl-de/artist/7IYyo3ycDI6HOa5M5TB62F"
+           target="_blank"
+           rel="noopener">
+          Song-Hinweis (Spotify)
+        </a>
+
+        <div class="hint">
+          Kein Login. Keine Abgabe. Einfach üben und prüfen.
+        </div>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="card">
+        <h2>So nutzt du das Dashboard</h2>
+        <ul>
+          <li>Niveau wählen (1–3).</li>
+          <li>Aufgaben bearbeiten.</li>
+          <li><strong>Prüfen</strong> klicken → richtige Lösungen werden farbig markiert.</li>
+          <li>Optional: <strong>Alles prüfen</strong> oder <strong>Alle Lösungen anzeigen</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Was wird geübt?</h2>
+        <ul>
+          <li><strong>Aussagen:</strong> have/has + Verb 3</li>
+          <li><strong>Verneinungen:</strong> haven’t/hasn’t + Verb 3</li>
+          <li><strong>Fragen:</strong> Have/Has + subject + Verb 3 … ?</li>
+          <li><strong>Verbformen:</strong> Past Participle (go–went–gone …)</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <div>© Herr Digital (Inh. R. Kordes) · Landingpage</div>
+      <a href="./impressum.html">Impressum</a>
+      <a href="./datenschutz.html">Datenschutz</a>
+	<div class="right">
+        <span>Song:</span>
+        <a href="https://open.spotify.com/intl-de/artist/7IYyo3ycDI6HOa5M5TB62F"
+           target="_blank"
+           rel="noopener">
+          Grammar &amp; The Grooves (Spotify)
+        </a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
