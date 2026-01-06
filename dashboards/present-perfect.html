@@ -594,6 +594,27 @@
       <div class="feedback">
         <strong>Hinweis:</strong> Eingaben werden lokal im Browser gespeichert (localStorage).
       </div>
+      <div class="dashCard" style="margin-top:12px;">
+  <div class="dashTitle">Teilen (QR / Link)</div>
+  <p class="dashDesc">QR scannen oder Link kopieren</p>
+
+  <div class="dashActions" style="margin-bottom:10px;">
+    <button class="btn secondary" id="btnShare">Teilen</button>
+    <button class="btn" id="btnCopy">Link kopieren</button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center;">
+    <img id="qrImg" alt="QR-Code zum Dashboard"
+         style="width:120px;height:120px;border-radius:14px;border:1px solid var(--line);background:var(--panel2);padding:8px">
+    <div>
+      <div class="tag" style="margin-bottom:8px;">Dashboard-Link</div>
+      <div class="hint" style="margin:0;">
+        <span class="mono" id="shareLink" style="word-break:break-all;"></span>
+      </div>
+      <div class="hint" id="copyStatus" style="margin-top:8px;"></div>
+    </div>
+  </div>
+</div>
     </aside>
   </div>
 </main>
@@ -1222,11 +1243,68 @@ document.getElementById('btnBack')?.addEventListener('click', () => {
   // window.location.href = "index.html"; // wenn Dashboard im Root liegt
 });
 
+// --- Teilen (QR / Link) – dieses Dashboard ---
+(function(){
+  const pageUrl = window.location.href.split('#')[0];
+
+  const linkEl = document.getElementById("shareLink");
+  if(linkEl) linkEl.textContent = pageUrl;
+
+  const qrImg = document.getElementById("qrImg");
+  if(qrImg){
+    qrImg.src =
+      "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" +
+      encodeURIComponent(pageUrl);
+  }
+
+  const statusEl = document.getElementById("copyStatus");
+
+  const copyBtn = document.getElementById("btnCopy");
+  if(copyBtn){
+    copyBtn.addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText(pageUrl);
+        if(statusEl){
+          statusEl.innerHTML =
+            '<span style="color:#1f9d55;font-weight:800;">✔ Link kopiert.</span>';
+        }
+      }catch{
+        window.prompt("Link kopieren:", pageUrl);
+      }
+    });
+  }
+
+  const shareBtn = document.getElementById("btnShare");
+  if(shareBtn){
+    shareBtn.addEventListener("click", async ()=>{
+      if(navigator.share){
+        try{
+          await navigator.share({
+            title: document.title || "Übungsdashboard",
+            url: pageUrl
+          });
+        }catch{}
+      }else{
+        try{
+          await navigator.clipboard.writeText(pageUrl);
+          if(statusEl){
+            statusEl.innerHTML =
+              '<span style="color:#1f9d55;font-weight:800;">✔ Link kopiert.</span>';
+          }
+        }catch{
+          window.prompt("Teilen nicht verfügbar. Link:", pageUrl);
+        }
+      }
+    });
+  }
+})();
+
   
 init();
 </script>
 </body>
 </html>
+
 
 
 
