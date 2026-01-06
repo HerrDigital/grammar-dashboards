@@ -311,6 +311,9 @@
 </header>
 
 <main>
+  <div class="row" style="margin:0 0 12px;">
+  <button class="btn ghost" id="btnBack">← Zurück zur Übersicht</button>
+  </div>
   <div class="grid">
     <section class="card" aria-label="Aufgabenbereich">
 
@@ -1141,7 +1144,16 @@ document.getElementById('btnShowAll').addEventListener('click', ()=>{
   [1,2,3,4,5].forEach(solutionTask);
 });
 
+// Zurück zur Übersicht (Landingpage)
+document.getElementById('btnBack')?.addEventListener('click', () => {
+  // Passe den Pfad an, falls deine Landingpage anders liegt:
+  window.location.href = "../index.html"; // wenn Dashboard in Unterordner liegt
+  // window.location.href = "index.html"; // wenn Dashboard im Root liegt
+});
+
+  
 init();
 </script>
 </body>
 </html>
+
