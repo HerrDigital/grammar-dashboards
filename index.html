@@ -463,7 +463,7 @@
       <!-- SHARE -->
       <div class="dashCard" style="margin-top:12px;">
         <div class="dashTitle">Teilen (QR / Link)</div>
-        <p class="dashDesc">QR scannen oder Link kopieren – ideal für itslearning.</p>
+        <p class="dashDesc">QR scannen oder Link kopieren</p>
 
         <div class="dashActions" style="margin-bottom:10px;">
           <button class="btn secondary" id="btnShare">Teilen</button>
@@ -508,16 +508,16 @@
 
 <script>
 (function(){
-  const dashboardPath = "/dashboards/present-perfect.html";
-  const dashboardUrl = window.location.origin + dashboardPath;
+  const overviewUrl = window.location.origin + "/index.html";
+
 
   const linkEl = document.getElementById("shareLink");
-  if(linkEl) linkEl.textContent = dashboardUrl;
+  if(linkEl) linkEl.textContent = overviewUrl;
 
   const qrImg = document.getElementById("qrImg");
   if(qrImg){
     qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data="
-      + encodeURIComponent(dashboardUrl);
+      + encodeURIComponent(overviewUrl);
   }
 
   const statusEl = document.getElementById("copyStatus");
@@ -526,10 +526,10 @@
   if(copyBtn){
     copyBtn.addEventListener("click", async ()=>{
       try{
-        await navigator.clipboard.writeText(dashboardUrl);
+        await navigator.clipboard.writeText(overviewUrl);
         statusEl.innerHTML = '<span style="color:#1f9d55;font-weight:800;">✔ Link kopiert.</span>';
       }catch{
-        window.prompt("Link kopieren:", dashboardUrl);
+        window.prompt("Link kopieren:", overviewUrl);
       }
     });
   }
@@ -541,15 +541,15 @@
         try{
           await navigator.share({
             title:"Present Perfect – Übungsdashboard",
-            url:dashboardUrl
+            url:overviewUrl
           });
         }catch{}
       }else{
         try{
-          await navigator.clipboard.writeText(dashboardUrl);
+          await navigator.clipboard.writeText(overviewUrl);
           statusEl.innerHTML = '<span style="color:#1f9d55;font-weight:800;">✔ Link kopiert.</span>';
         }catch{
-          window.prompt("Teilen nicht verfügbar. Link:", dashboardUrl);
+          window.prompt("Teilen nicht verfügbar. Link:", overviewUrl);
         }
       }
     });
@@ -559,5 +559,6 @@
 
 </body>
 </html>
+
 
 
