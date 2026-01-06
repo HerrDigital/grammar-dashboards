@@ -81,7 +81,7 @@
       box-shadow:var(--shadow);
     }
 
-    /* --- NEW: header branding --- */
+    /* header branding */
     .header-right{
       display:flex;
       align-items:center;
@@ -307,7 +307,19 @@
       font-weight:700;
     }
 
-    /* --- NEW: footer with subtle spotify link (no CTA) --- */
+    /* bottom actions per task */
+    .task-actions-bottom{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+      margin-top:12px;
+      padding-top:12px;
+      border-top:1px dashed var(--line);
+    }
+
+    /* footer */
     .footer{
       max-width:1160px;
       margin:16px auto 28px;
@@ -341,7 +353,6 @@
     <p class="sub">Übersichtlich · 3 Niveaustufen · Selbstkontrolle · Ergebnisse farbig markiert (Petrol/Grün)</p>
   </div>
 
-  <!-- NEW: toolbar + logo grouped -->
   <div class="header-right">
     <div class="toolbar" role="region" aria-label="Einstellungen">
       <label for="level">Niveau:</label>
@@ -355,7 +366,6 @@
       <button class="btn ghost" id="btnReset">↩︎ Zurücksetzen</button>
     </div>
 
-    <!-- Firmenlogo (dezent, ohne Link) -->
     <img class="brand-logo"
          src="https://i.ibb.co/M5NS6qnJ/Chat-GPT-Image-24-Nov-2025-15-48-13.png"
          alt="Firmenlogo" />
@@ -398,7 +408,7 @@
         </div>
       </div>
 
-      <!-- TASK 1: Statements (MC) 10 items -->
+      <!-- TASK 1 -->
       <div class="task" id="task1">
         <div class="task-header">
           <div>
@@ -406,26 +416,29 @@
             <div class="task-desc">Wähle die richtige Form. Nach dem Prüfen werden korrekte Sätze petrol/grün markiert.</div>
           </div>
           <div class="row">
-            <button class="btn primary" data-action="check" data-task="1">Prüfen</button>
             <button class="btn ghost" data-action="solution" data-task="1">Musterlösung</button>
           </div>
         </div>
+
         <div class="sectionHint">
           <div class="small">Regel: he/she/it → <strong>has</strong> · sonst → <strong>have</strong></div>
           <div class="count">10 Items</div>
         </div>
 
-        <!-- level 1 -->
         <div class="q" data-level="1" id="t1_l1"></div>
-        <!-- level 2 -->
         <div class="q" data-level="2" id="t1_l2"></div>
-        <!-- level 3 -->
         <div class="q" data-level="3" id="t1_l3"></div>
 
         <div id="fb1" class="feedback hidden"></div>
+
+        <!-- bottom actions -->
+        <div class="task-actions-bottom">
+          <button class="btn primary" data-action="check" data-task="1">Prüfen</button>
+          <button class="btn ghost" data-action="solution" data-task="1">Musterlösung</button>
+        </div>
       </div>
 
-      <!-- TASK 2: Negations 10 items (text) -->
+      <!-- TASK 2 -->
       <div class="task" id="task2">
         <div class="task-header">
           <div>
@@ -433,10 +446,10 @@
             <div class="task-desc">Schreibe den Satz negativ. Nach dem Prüfen werden richtige Antworten markiert.</div>
           </div>
           <div class="row">
-            <button class="btn primary" data-action="check" data-task="2">Prüfen</button>
             <button class="btn ghost" data-action="solution" data-task="2">Musterlösung</button>
           </div>
         </div>
+
         <div class="sectionHint">
           <div class="small">Form: <span class="mono">haven’t/hasn’t + Verb 3</span> (Verb bleibt gleich!)</div>
           <div class="count">10 Items</div>
@@ -447,9 +460,15 @@
         <div class="q" data-level="3" id="t2_l3"></div>
 
         <div id="fb2" class="feedback hidden"></div>
+
+        <!-- bottom actions -->
+        <div class="task-actions-bottom">
+          <button class="btn primary" data-action="check" data-task="2">Prüfen</button>
+          <button class="btn ghost" data-action="solution" data-task="2">Musterlösung</button>
+        </div>
       </div>
 
-      <!-- TASK 3: Questions 10 items (text) -->
+      <!-- TASK 3 -->
       <div class="task" id="task3">
         <div class="task-header">
           <div>
@@ -457,10 +476,10 @@
             <div class="task-desc">Bilde die Frage. Nach dem Prüfen werden richtige Antworten markiert.</div>
           </div>
           <div class="row">
-            <button class="btn primary" data-action="check" data-task="3">Prüfen</button>
             <button class="btn ghost" data-action="solution" data-task="3">Musterlösung</button>
           </div>
         </div>
+
         <div class="sectionHint">
           <div class="small">Wortstellung: <span class="mono">Have/Has + subject + Verb 3 … ?</span></div>
           <div class="count">10 Items</div>
@@ -471,9 +490,15 @@
         <div class="q" data-level="3" id="t3_l3"></div>
 
         <div id="fb3" class="feedback hidden"></div>
+
+        <!-- bottom actions -->
+        <div class="task-actions-bottom">
+          <button class="btn primary" data-action="check" data-task="3">Prüfen</button>
+          <button class="btn ghost" data-action="solution" data-task="3">Musterlösung</button>
+        </div>
       </div>
 
-      <!-- TASK 4: Verb form 3 (10 items) -->
+      <!-- TASK 4 -->
       <div class="task" id="task4">
         <div class="task-header">
           <div>
@@ -481,10 +506,10 @@
             <div class="task-desc">Trage die 3. Form ein. Nach dem Prüfen werden richtige Antworten markiert.</div>
           </div>
           <div class="row">
-            <button class="btn primary" data-action="check" data-task="4">Prüfen</button>
             <button class="btn ghost" data-action="solution" data-task="4">Musterlösung</button>
           </div>
         </div>
+
         <div class="sectionHint">
           <div class="small">Tipp: go–went–gone, write–wrote–written, speak–spoke–spoken …</div>
           <div class="count">10 Items</div>
@@ -495,9 +520,15 @@
         <div class="q" data-level="3" id="t4_l3"></div>
 
         <div id="fb4" class="feedback hidden"></div>
+
+        <!-- bottom actions -->
+        <div class="task-actions-bottom">
+          <button class="btn primary" data-action="check" data-task="4">Prüfen</button>
+          <button class="btn ghost" data-action="solution" data-task="4">Musterlösung</button>
+        </div>
       </div>
 
-      <!-- TASK 5: Free writing (reduced) -->
+      <!-- TASK 5 -->
       <div class="task" id="task5">
         <div class="task-header">
           <div>
@@ -505,7 +536,6 @@
             <div class="task-desc">Schreibe eigene Sätze – mit Selbstkontroll-Checkliste (Struktur + Signalwort).</div>
           </div>
           <div class="row">
-            <button class="btn primary" data-action="check" data-task="5">Prüfen</button>
             <button class="btn ghost" data-action="solution" data-task="5">Beispiel</button>
           </div>
         </div>
@@ -526,6 +556,12 @@
         </div>
 
         <div id="fb5" class="feedback hidden"></div>
+
+        <!-- bottom actions -->
+        <div class="task-actions-bottom">
+          <button class="btn primary" data-action="check" data-task="5">Prüfen</button>
+          <button class="btn ghost" data-action="solution" data-task="5">Beispiel</button>
+        </div>
       </div>
 
     </section>
@@ -559,7 +595,6 @@
   </div>
 </main>
 
-<!-- NEW: subtle footer with artist link -->
 <div class="footer" aria-label="Footer">
   <div class="footer-inner">
     <span>Song-Hinweis:</span>
@@ -575,9 +610,7 @@
 /* -------------------------------
    CONTENT (10 Items each)
 --------------------------------- */
-
 const TASKS = {
-  // Task 1: have/has MC (10)
   1: {
     1: [
       {subj:"I", v3:"tried", rest:"this song before.", correct:"have"},
@@ -606,18 +639,16 @@ const TASKS = {
     3: [
       {subj:"He", v3:"looked for", rest:"his keys all day.", correct:"has"},
       {subj:"We", v3:"heard", rest:"what you will say.", correct:"have"},
-      {subj:"She", v3:"already", rest:"finished the track.", correct:"has", special:"already"},
-      {subj:"They", v3:"never", rest:"been to London.", correct:"have", special:"never"},
-      {subj:"It", v3:"just", rest:"started.", correct:"has", special:"just"},
-      {subj:"You", v3:"ever", rest:"sung in public.", correct:"have", special:"ever"},
-      {subj:"Tom", v3:"not", rest:"done his homework.", correct:"has", special:"not"},
-      {subj:"I", v3:"not", rest:"seen that movie.", correct:"have", special:"not"},
-      {subj:"My parents", v3:"already", rest:"known the news.", correct:"have", special:"already"},
-      {subj:"Sara", v3:"just", rest:"broken the glass.", correct:"has", special:"just"},
+      {subj:"She", v3:"already", rest:"finished the track.", correct:"has"},
+      {subj:"They", v3:"never", rest:"been to London.", correct:"have"},
+      {subj:"It", v3:"just", rest:"started.", correct:"has"},
+      {subj:"You", v3:"ever", rest:"sung in public.", correct:"have"},
+      {subj:"Tom", v3:"not", rest:"done his homework.", correct:"has"},
+      {subj:"I", v3:"not", rest:"seen that movie.", correct:"have"},
+      {subj:"My parents", v3:"already", rest:"known the news.", correct:"have"},
+      {subj:"Sara", v3:"just", rest:"broken the glass.", correct:"has"},
     ]
   },
-
-  // Task 2: Negations (10) input -> full sentence
   2: {
     1: [
       {pos:"I have tried the song.", neg:"I haven't tried the song."},
@@ -656,8 +687,6 @@ const TASKS = {
       {pos:"Tom has done his homework.", neg:"Tom hasn't done his homework yet."},
     ]
   },
-
-  // Task 3: Questions (10) input -> full question
   3: {
     1: [
       {prompt:"you / ever / dance / in the rain", sol:"Have you ever danced in the rain?"},
@@ -696,8 +725,6 @@ const TASKS = {
       {prompt:"you / ever / miss / a train", sol:"Have you ever missed a train?"},
     ]
   },
-
-  // Task 4: Verb 3 (10) input -> past participle only (or in sentence for level3)
   4: {
     1: [
       {base:"go – went –", sol:"gone"},
@@ -738,9 +765,6 @@ const TASKS = {
   }
 };
 
-/* -------------------------------
-   Scoring (simple & clear)
---------------------------------- */
 const MAX_POINTS = {
   1: {1:10,2:10,3:10,4:10,5:3},
   2: {1:10,2:10,3:10,4:10,5:4},
@@ -762,7 +786,6 @@ function normalize(s){
 }
 
 function getLevel(){ return Number($('#level').value); }
-
 function storageKey(){ return "pp_dashboard_light_petrol_v2"; }
 
 function saveState(){
@@ -798,7 +821,6 @@ function resetAll(){
     inp.classList.remove("correct","wrong");
   });
   $$('input[type="radio"]').forEach(r=>r.checked=false);
-  // remove MC highlights
   $$('.opt').forEach(o=>o.classList.remove("is-correct","is-wrong"));
   [1,2,3,4,5].forEach(clearFeedback);
   pointsState = {1:0,2:0,3:0,4:0,5:0};
@@ -838,9 +860,6 @@ function award(task, pts){
   updateScore();
 }
 
-/* -------------------------------
-   Render tasks (so structure stays clean)
---------------------------------- */
 function renderTask1(level){
   const wrap = $(`#t1_l${level}`);
   wrap.innerHTML = "";
@@ -913,9 +932,6 @@ function renderTask4(level){
   });
 }
 
-/* -------------------------------
-   Level handling
---------------------------------- */
 function setLevel(level){
   $$('[data-level]').forEach(node=>{
     node.classList.toggle('hidden', node.getAttribute('data-level') !== String(level));
@@ -925,9 +941,6 @@ function setLevel(level){
   updateScore();
 }
 
-/* -------------------------------
-   Checking + highlighting
---------------------------------- */
 function getRadio(name){
   const el = document.querySelector(`input[type="radio"][name="${name}"]:checked`);
   return el ? el.value : "";
@@ -943,7 +956,6 @@ function highlightMC(qName, correctValue){
     if(val === correctValue) opt.classList.add("is-correct");
   });
 
-  // also show wrong selection as red
   const chosen = getRadio(qName);
   if(chosen && chosen !== correctValue){
     opts.forEach(opt=>{
@@ -1139,9 +1151,6 @@ function solutionTask(task){
   }
 }
 
-/* -------------------------------
-   Init render
---------------------------------- */
 function init(){
   [1,2,3].forEach(l=>{
     renderTask1(l);
@@ -1156,9 +1165,6 @@ function init(){
   updateScore();
 }
 
-/* -------------------------------
-   Events
---------------------------------- */
 document.addEventListener('click', (e)=>{
   const btn = e.target.closest('[data-action]');
   if(btn){
