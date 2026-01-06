@@ -1,0 +1,1147 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple Present – Digitales Übungsdashboard (Kl. 7)</title>
+  <style>
+    :root{
+      /* LIGHT THEME (Petrol + Grey) */
+      --bg:#f4f6f8;
+      --panel:#ffffff;
+      --panel2:#f0f2f4;
+      --text:#1b2430;
+      --muted:#5b6674;
+      --line:#d7dde3;
+
+      --petrol:#167d7f;
+      --petrolSoft:#e7f4f4;
+      --petrolSoft2:#d6eeee;
+
+      --ok:#1f9d55;
+      --okBg:#e8f7ee;
+
+      --bad:#d62839;
+      --badBg:#fdecee;
+
+      --shadow: 0 8px 20px rgba(17, 34, 51, .08);
+      --radius:16px;
+
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg) 55%);
+      min-height:100vh;
+    }
+
+    header{
+      max-width:1160px;
+      margin:0 auto;
+      padding:18px 18px 8px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .title{display:flex; flex-direction:column; gap:4px;}
+    h1{margin:0; font-size:22px; letter-spacing:.2px;}
+    .sub{margin:0; color:var(--muted); font-size:13px;}
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      background:var(--panel);
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius:999px;
+      box-shadow:var(--shadow);
+    }
+
+    .header-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .brand-logo{
+      height:34px;
+      width:auto;
+      opacity:.65;
+      filter: saturate(0.95);
+    }
+    @media (max-width: 600px){
+      .brand-logo{ height:30px; opacity:.55; }
+    }
+
+    label{font-size:13px; color:var(--muted);}
+
+    select, input[type="text"], textarea{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      color:var(--text);
+      padding:9px 10px;
+      border-radius:10px;
+      outline:none;
+    }
+    select{cursor:pointer}
+
+    main{
+      max-width:1160px;
+      margin:0 auto;
+      padding:10px 18px 34px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:16px;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+    .card h2{margin:0 0 10px; font-size:16px}
+    .card h3{margin:0 0 8px; font-size:14px; color:var(--muted); font-weight:700}
+
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+
+    .btn{
+      border:1px solid var(--line);
+      background:var(--panel);
+      color:var(--text);
+      padding:9px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:.15s transform,.15s background;
+      font-size:13px;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      background: var(--petrol);
+      border-color: var(--petrol);
+      color:#fff;
+    }
+    .btn.ghost{background:transparent;}
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:var(--petrolSoft);
+      border:1px solid var(--petrolSoft2);
+      color:var(--petrol);
+      font-size:12px;
+      margin-right:8px;
+      margin-bottom:8px;
+      font-weight:600;
+    }
+
+    .hr{height:1px; background:var(--line); margin:14px 0}
+
+    .score{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      background: linear-gradient(180deg, var(--petrolSoft) 0%, #fff 70%);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px 14px;
+    }
+
+    .tag{
+      padding:3px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    .task{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      background:#fff;
+      margin-top:12px;
+    }
+
+    .task-header{
+      display:flex;
+      gap:10px;
+      justify-content:space-between;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+
+    .task-title{font-weight:800; font-size:14px}
+    .task-desc{color:var(--muted); font-size:13px; margin:6px 0 0}
+
+    .q{
+      padding:12px 0;
+      border-top:1px dashed var(--line);
+    }
+    .q:first-child{border-top:none; padding-top:0}
+
+    .q label{
+      display:block;
+      margin-bottom:8px;
+      color:var(--text);
+      font-weight:650;
+      font-size:13px;
+    }
+
+    .small{font-size:12px; color:var(--muted)}
+    .mono{font-family:var(--mono)}
+
+    .feedback{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .hidden{display:none !important}
+
+    input.correct, textarea.correct, select.correct{
+      border-color: rgba(31,157,85,.55) !important;
+      background: var(--okBg) !important;
+    }
+    input.wrong, textarea.wrong, select.wrong{
+      border-color: rgba(214,40,57,.55) !important;
+      background: var(--badBg) !important;
+    }
+
+    .okTxt{color:var(--ok); font-weight:800}
+    .badTxt{color:var(--bad); font-weight:800}
+
+    .sectionHint{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+    .count{font-size:12px; color:var(--muted); font-weight:700;}
+
+    .footer{
+      max-width:1160px;
+      margin:16px auto 28px;
+      padding:0 18px;
+    }
+    .footer-inner{
+      display:flex;
+      justify-content:flex-end;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+      font-size:12px;
+      color:var(--muted);
+      border-top:1px solid var(--line);
+      padding-top:12px;
+    }
+    .footer-inner a{
+      color:var(--petrol);
+      text-decoration:none;
+      border-bottom:1px dotted rgba(22,125,127,.45);
+    }
+    .footer-inner a:hover{border-bottom-style:solid;}
+
+    .blank{
+      display:inline-block;
+      min-width:120px;
+      vertical-align:middle;
+      margin:0 6px;
+    }
+    .blank.sm{min-width:90px}
+    .blank.xs{min-width:70px}
+  </style>
+</head>
+<body>
+<header>
+  <div class="title">
+    <h1>Simple Present – Digitales Übungsdashboard</h1>
+    <p class="sub">Übersichtlich · 3 Niveaustufen · Selbstkontrolle · Ergebnisse farbig markiert (Petrol/Grün)</p>
+  </div>
+
+  <div class="header-right">
+    <div class="toolbar" role="region" aria-label="Einstellungen">
+      <label for="level">Niveau:</label>
+      <select id="level">
+        <option value="1">Niveau 1 (leicht)</option>
+        <option value="2" selected>Niveau 2 (Standard)</option>
+        <option value="3">Niveau 3 (anspruchsvoll)</option>
+      </select>
+
+      <button class="btn ghost" id="btnSave" title="Speichern">💾 Speichern</button>
+      <button class="btn ghost" id="btnReset">↩︎ Zurücksetzen</button>
+    </div>
+
+    <img class="brand-logo"
+         src="https://i.ibb.co/M5NS6qnJ/Chat-GPT-Image-24-Nov-2025-15-48-13.png"
+         alt="Firmenlogo" />
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+    <section class="card" aria-label="Aufgabenbereich">
+
+      <div class="score" aria-label="Übersicht">
+        <div>
+          <strong>Dein Stand:</strong>
+          <div class="small">Bearbeite die Aufgaben → klicke <span class="mono">Prüfen</span> → richtige Antworten werden farbig markiert.</div>
+        </div>
+        <div class="row">
+          <span class="tag">Punkte: <span id="points">0</span>/<span id="maxPoints">0</span></span>
+          <span class="tag">Erfolg: <span id="percent">0</span>%</span>
+        </div>
+      </div>
+
+      <!-- Aufgabe 1 -->
+      <div class="task" id="task1">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 1: Merkkasten (Lückentext)</div>
+            <div class="task-desc">
+              Ergänze die wichtigsten Regeln zum <strong>Simple Present</strong>.
+              <span class="small">Tipp: Achte im Song auf <span class="mono">facts & habits</span> und <span class="mono">he/she/it + s</span>.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="q" data-level="1" id="t1_l1"></div>
+        <div class="q" data-level="2" id="t1_l2"></div>
+        <div class="q" data-level="3" id="t1_l3"></div>
+
+        <div class="row" style="margin-top:10px">
+          <button class="btn primary" data-action="check" data-task="1">Prüfen</button>
+          <button class="btn ghost" data-action="solution" data-task="1">Musterlösung</button>
+        </div>
+        <div id="fb1" class="feedback hidden"></div>
+      </div>
+
+      <!-- Aufgabe 2 (neu: Input-Übung, kein MC, mit Grundform in Klammern) -->
+      <div class="task" id="task2">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 2: Aussagen – Verb richtig einsetzen (10)</div>
+            <div class="task-desc">
+              Ergänze die Lücke mit der richtigen Verbform im <strong>Simple Present</strong>.
+              <span class="small">Tipp: Bei <span class="mono">he/she/it</span> oft <span class="mono">-s / -es / -ies</span> (siehe Song: „he/she/it + s“).</span>
+            </div>
+          </div>
+        </div>
+        <div class="sectionHint">
+          <div class="small">Schreibe <strong>nur</strong> das Verb in die Lücke.</div>
+          <div class="count">10 Items</div>
+        </div>
+
+        <div class="q" data-level="1" id="t2_l1"></div>
+        <div class="q" data-level="2" id="t2_l2"></div>
+        <div class="q" data-level="3" id="t2_l3"></div>
+
+        <div class="row" style="margin-top:10px">
+          <button class="btn primary" data-action="check" data-task="2">Prüfen</button>
+          <button class="btn ghost" data-action="solution" data-task="2">Musterlösung</button>
+        </div>
+        <div id="fb2" class="feedback hidden"></div>
+      </div>
+
+      <!-- Aufgabe 3 -->
+      <div class="task" id="task3">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 3: Verneinungen – don’t/doesn’t (10)</div>
+            <div class="task-desc">Schreibe den Satz negativ. Nach dem Prüfen werden richtige Antworten markiert.</div>
+          </div>
+        </div>
+        <div class="sectionHint">
+          <div class="small">Form: <span class="mono">don’t/doesn’t + Verb (Grundform)</span></div>
+          <div class="count">10 Items</div>
+        </div>
+
+        <div class="q" data-level="1" id="t3_l1"></div>
+        <div class="q" data-level="2" id="t3_l2"></div>
+        <div class="q" data-level="3" id="t3_l3"></div>
+
+        <div class="row" style="margin-top:10px">
+          <button class="btn primary" data-action="check" data-task="3">Prüfen</button>
+          <button class="btn ghost" data-action="solution" data-task="3">Musterlösung</button>
+        </div>
+        <div id="fb3" class="feedback hidden"></div>
+      </div>
+
+      <!-- Aufgabe 4 -->
+      <div class="task" id="task4">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 4: Fragen – Do/Does … ? (10)</div>
+            <div class="task-desc">Bilde die Frage. Nach dem Prüfen werden richtige Antworten markiert.</div>
+          </div>
+        </div>
+        <div class="sectionHint">
+          <div class="small">Wortstellung: <span class="mono">Do/Does + subject + verb … ?</span></div>
+          <div class="count">10 Items</div>
+        </div>
+
+        <div class="q" data-level="1" id="t4_l1"></div>
+        <div class="q" data-level="2" id="t4_l2"></div>
+        <div class="q" data-level="3" id="t4_l3"></div>
+
+        <div class="row" style="margin-top:10px">
+          <button class="btn primary" data-action="check" data-task="4">Prüfen</button>
+          <button class="btn ghost" data-action="solution" data-task="4">Musterlösung</button>
+        </div>
+        <div id="fb4" class="feedback hidden"></div>
+      </div>
+
+      <!-- Aufgabe 5 -->
+      <div class="task" id="task5">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 5: Your Turn (kurz)</div>
+            <div class="task-desc">Schreibe eigene Sätze – mit Selbstkontroll-Checkliste (Signalwort + Form).</div>
+          </div>
+        </div>
+
+        <div class="q" data-level="1">
+          <label>Schreibe <strong>2</strong> Sätze im Simple Present (mit <span class="mono">always/often</span>):</label>
+          <textarea data-id="t5_l1_txt" rows="4" style="width:100%" placeholder="1) I ...&#10;2) She ..."></textarea>
+        </div>
+
+        <div class="q" data-level="2">
+          <label>Schreibe <strong>3</strong> Sätze: 2 Aussagen + 1 Verneinung (mit Signalwort):</label>
+          <textarea data-id="t5_l2_txt" rows="5" style="width:100%" placeholder="Statements + Negation ..."></textarea>
+        </div>
+
+        <div class="q" data-level="3">
+          <label>Schreibe <strong>3</strong> Zeilen: 1 Aussage + 1 Verneinung + 1 Frage:</label>
+          <textarea data-id="t5_l3_txt" rows="5" style="width:100%" placeholder="Line 1...&#10;Line 2...&#10;Line 3...?"></textarea>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <button class="btn primary" data-action="check" data-task="5">Prüfen</button>
+          <button class="btn ghost" data-action="solution" data-task="5">Beispiel</button>
+        </div>
+        <div id="fb5" class="feedback hidden"></div>
+      </div>
+
+    </section>
+
+    <aside class="card" aria-label="Schnellhilfe">
+      <h2>Schnellhilfe</h2>
+      <div class="pill">facts & habits</div>
+      <div class="pill">he/she/it + s</div>
+      <div class="pill">do/does</div>
+      <div class="pill">don’t/doesn’t</div>
+
+      <div class="hr"></div>
+      <h3>Dashboard-Steuerung</h3>
+      <div class="row">
+        <button class="btn" id="btnCheckAll">Alles prüfen</button>
+        <button class="btn ghost" id="btnShowAll">Alle Lösungen anzeigen</button>
+      </div>
+
+      <div class="hr"></div>
+      <div class="feedback">
+        <strong>Hinweis:</strong> Eingaben werden lokal im Browser gespeichert (localStorage).
+      </div>
+    </aside>
+  </div>
+</main>
+
+<div class="footer" aria-label="Footer">
+  <div class="footer-inner">
+    <span>Song-Hinweis:</span>
+    <a href="https://open.spotify.com/intl-de/artist/7IYyo3ycDI6HOa5M5TB62F" target="_blank" rel="noopener">
+      Grammar &amp; The Grooves auf Spotify
+    </a>
+  </div>
+</div>
+
+<script>
+/* -------------------------------
+   CONTENT
+--------------------------------- */
+const TASKS = {
+  1: {
+    solution: {
+      sp1_fact: "facts",
+      sp1_habit: "habits",
+      sp1_base: "verb",
+      sp1_s: "s",
+      sp1_dont: "don't",
+      sp1_doesnt: "doesn't",
+      sp1_do: "do",
+      sp1_does: "does",
+      sp1_sig1: "every day",
+      sp1_sig2: "often",
+      sp1_sig3: "sometimes",
+      sp1_sig4: "never"
+    },
+    options: {
+      l1: {
+        sp1_fact: ["facts","habits","past","future"],
+        sp1_habit: ["habits","facts","questions","negatives"],
+        sp1_base: ["verb","verbs","verb+s","did"],
+        sp1_s: ["s","ed","ing","'t"],
+        sp1_dont: ["don't","doesn't","do","does"],
+        sp1_doesnt: ["doesn't","don't","do","didn't"],
+        sp1_do: ["do","does","did","done"],
+        sp1_does: ["does","do","did","done"],
+        sp1_sig1: ["every day","yesterday","now","last week"],
+        sp1_sig2: ["often","already","never","yet"],
+        sp1_sig3: ["sometimes","since","just","ever"],
+        sp1_sig4: ["never","yesterday","already","tomorrow"]
+      },
+      l2: {
+        sp1_fact: ["facts","habit","habits","present perfect","yesterday"],
+        sp1_habit: ["habits","habit","facts","ever/never","last week"],
+        sp1_base: ["verb","verbs","verb form 3","verb+s","was/were"],
+        sp1_s: ["s","es","ies","ed","have/has"],
+        sp1_dont: ["don't","doesn't","didn't","haven't","isn't"],
+        sp1_doesnt: ["doesn't","don't","didn't","hasn't","aren't"],
+        sp1_do: ["do","does","did","have","has"],
+        sp1_does: ["does","do","did","have","has"],
+        sp1_sig1: ["every day","last night","already","yet","often"],
+        sp1_sig2: ["often","ever","just","already","yesterday"],
+        sp1_sig3: ["sometimes","since","for","never","tomorrow"],
+        sp1_sig4: ["never","yet","already","last week","now"]
+      }
+    }
+  },
+
+  /* Aufgabe 2: Aussagen – Input (Verb einsetzen) */
+  2: {
+    1: [
+      {sent:"I ________ up at 7 o'clock.", base:"get", sol:"get"},
+      {sent:"She ________ up at 7 o'clock.", base:"get", sol:"gets"},
+      {sent:"We ________ English on Mondays.", base:"have", sol:"have"},
+      {sent:"He ________ English on Mondays.", base:"have", sol:"has"},
+      {sent:"They ________ football after school.", base:"play", sol:"play"},
+      {sent:"Tom ________ to school by bus.", base:"go", sol:"goes"},
+      {sent:"You ________ German at home.", base:"speak", sol:"speak"},
+      {sent:"My mum ________ dinner.", base:"cook", sol:"cooks"},
+      {sent:"It ________ a lot in autumn.", base:"rain", sol:"rains"},
+      {sent:"Anna ________ books in the evening.", base:"read", sol:"reads"},
+    ],
+    2: [
+      {sent:"My dad ________ the TV after work.", base:"watch", sol:"watches"},         /* -ch + es */
+      {sent:"She ________ her homework every day.", base:"do", sol:"does"},            /* irregular */
+      {sent:"He ________ late on Fridays.", base:"stay", sol:"stays"},                 /* vowel + y -> s */
+      {sent:"Tom ________ to music on the bus.", base:"listen", sol:"listens"},
+      {sent:"Our teacher ________ English clearly.", base:"speak", sol:"speaks"},
+      {sent:"The baby ________ a lot.", base:"cry", sol:"cries"},                      /* y -> ies */
+      {sent:"My sister ________ her room on Saturdays.", base:"tidy", sol:"tidies"},   /* y -> ies */
+      {sent:"It ________ at 8 o'clock.", base:"start", sol:"starts"},
+      {sent:"He ________ his keys in the morning.", base:"carry", sol:"carries"},      /* y -> ies */
+      {sent:"She ________ to school early.", base:"try", sol:"tries"},                 /* y -> ies */
+    ],
+    3: [
+      {sent:"He ________ the class every morning.", base:"teach", sol:"teaches"},      /* -ch + es */
+      {sent:"She ________ her teeth twice a day.", base:"brush", sol:"brushes"},       /* -sh + es */
+      {sent:"Tom ________ the ball very fast.", base:"catch", sol:"catches"},          /* -ch + es */
+      {sent:"The dog ________ at strangers.", base:"bark", sol:"barks"},
+      {sent:"My brother ________ the boxes upstairs.", base:"carry", sol:"carries"},  /* y -> ies */
+      {sent:"She ________ her phone when it rings.", base:"hurry", sol:"hurries"},    /* y -> ies */
+      {sent:"It ________ when you press this button.", base:"buzz", sol:"buzzes"},    /* -zz + es */
+      {sent:"The bus ________ at 7:15.", base:"arrive", sol:"arrives"},
+      {sent:"He ________ his bike every weekend.", base:"fix", sol:"fixes"},           /* -x + es */
+      {sent:"She ________ the game and never gives up.", base:"enjoy", sol:"enjoys"},  /* regular + s */
+    ],
+  },
+
+  3: {
+    1: [
+      {pos:"I get up at 7 o'clock.", neg:"I don't get up at 7 o'clock."},
+      {pos:"She gets up at 7 o'clock.", neg:"She doesn't get up at 7 o'clock."},
+      {pos:"We have English on Mondays.", neg:"We don't have English on Mondays."},
+      {pos:"He has English on Mondays.", neg:"He doesn't have English on Mondays."},
+      {pos:"They play football after school.", neg:"They don't play football after school."},
+      {pos:"Tom goes to school by bus.", neg:"Tom doesn't go to school by bus."},
+      {pos:"You speak German at home.", neg:"You don't speak German at home."},
+      {pos:"My mum cooks dinner.", neg:"My mum doesn't cook dinner."},
+      {pos:"It rains a lot in autumn.", neg:"It doesn't rain a lot in autumn."},
+      {pos:"Anna reads books in the evening.", neg:"Anna doesn't read books in the evening."},
+    ],
+    2: [
+      {pos:"My dad watches TV after work.", neg:"My dad doesn't watch TV after work."},
+      {pos:"She does her homework every day.", neg:"She doesn't do her homework every day."},
+      {pos:"He stays late on Fridays.", neg:"He doesn't stay late on Fridays."},
+      {pos:"Tom listens to music on the bus.", neg:"Tom doesn't listen to music on the bus."},
+      {pos:"Our teacher speaks English clearly.", neg:"Our teacher doesn't speak English clearly."},
+      {pos:"The baby cries a lot.", neg:"The baby doesn't cry a lot."},
+      {pos:"My sister tidies her room on Saturdays.", neg:"My sister doesn't tidy her room on Saturdays."},
+      {pos:"It starts at 8 o'clock.", neg:"It doesn't start at 8 o'clock."},
+      {pos:"He carries his keys in the morning.", neg:"He doesn't carry his keys in the morning."},
+      {pos:"She tries to school early.", neg:"She doesn't try to school early."}, /* intentionally odd sentence? We'll fix below */
+    ],
+    3: [
+      {pos:"He teaches the class every morning.", neg:"He doesn't teach the class every morning."},
+      {pos:"She brushes her teeth twice a day.", neg:"She doesn't brush her teeth twice a day."},
+      {pos:"Tom catches the ball very fast.", neg:"Tom doesn't catch the ball very fast."},
+      {pos:"The dog barks at strangers.", neg:"The dog doesn't bark at strangers."},
+      {pos:"My brother carries the boxes upstairs.", neg:"My brother doesn't carry the boxes upstairs."},
+      {pos:"She hurries when her phone rings.", neg:"She doesn't hurry when her phone rings."},
+      {pos:"It buzzes when you press this button.", neg:"It doesn't buzz when you press this button."},
+      {pos:"The bus arrives at 7:15.", neg:"The bus doesn't arrive at 7:15."},
+      {pos:"He fixes his bike every weekend.", neg:"He doesn't fix his bike every weekend."},
+      {pos:"She enjoys the game and never gives up.", neg:"She doesn't enjoy the game and never gives up."},
+    ]
+  },
+
+  4: {
+    1: [
+      {prompt:"you / get up / at 7 o'clock", sol:"Do you get up at 7 o'clock?"},
+      {prompt:"she / get up / at 7 o'clock", sol:"Does she get up at 7 o'clock?"},
+      {prompt:"we / have English / on Mondays", sol:"Do we have English on Mondays?"},
+      {prompt:"he / have English / on Mondays", sol:"Does he have English on Mondays?"},
+      {prompt:"they / play football / after school", sol:"Do they play football after school?"},
+      {prompt:"tom / go to school / by bus", sol:"Does Tom go to school by bus?"},
+      {prompt:"you / speak German / at home", sol:"Do you speak German at home?"},
+      {prompt:"your mum / cook dinner", sol:"Does your mum cook dinner?"},
+      {prompt:"it / rain a lot / in autumn", sol:"Does it rain a lot in autumn?"},
+      {prompt:"anna / read books / in the evening", sol:"Does Anna read books in the evening?"},
+    ],
+    2: [
+      {prompt:"your dad / watch TV / after work", sol:"Does your dad watch TV after work?"},
+      {prompt:"she / do homework / every day", sol:"Does she do homework every day?"},
+      {prompt:"he / stay late / on Fridays", sol:"Does he stay late on Fridays?"},
+      {prompt:"tom / listen to music / on the bus", sol:"Does Tom listen to music on the bus?"},
+      {prompt:"your teacher / speak English / clearly", sol:"Does your teacher speak English clearly?"},
+      {prompt:"the baby / cry a lot", sol:"Does the baby cry a lot?"},
+      {prompt:"your sister / tidy her room / on Saturdays", sol:"Does your sister tidy her room on Saturdays?"},
+      {prompt:"it / start / at 8 o'clock", sol:"Does it start at 8 o'clock?"},
+      {prompt:"he / carry his keys / in the morning", sol:"Does he carry his keys in the morning?"},
+      {prompt:"she / try / hard", sol:"Does she try hard?"},
+    ],
+    3: [
+      {prompt:"he / teach the class / every morning", sol:"Does he teach the class every morning?"},
+      {prompt:"she / brush her teeth / twice a day", sol:"Does she brush her teeth twice a day?"},
+      {prompt:"tom / catch the ball / very fast", sol:"Does Tom catch the ball very fast?"},
+      {prompt:"the dog / bark / at strangers", sol:"Does the dog bark at strangers?"},
+      {prompt:"your brother / carry the boxes / upstairs", sol:"Does your brother carry the boxes upstairs?"},
+      {prompt:"she / hurry / when the phone rings", sol:"Does she hurry when the phone rings?"},
+      {prompt:"it / buzz / when you press this button", sol:"Does it buzz when you press this button?"},
+      {prompt:"the bus / arrive / at 7:15", sol:"Does the bus arrive at 7:15?"},
+      {prompt:"he / fix his bike / every weekend", sol:"Does he fix his bike every weekend?"},
+      {prompt:"she / enjoy the game", sol:"Does she enjoy the game?"},
+    ]
+  }
+};
+
+// quick fix: make the odd sentence in TASKS[3][2] correct:
+TASKS[3][2][9] = {pos:"She tries hard.", neg:"She doesn't try hard."};
+
+/* -------------------------------
+   Scoring
+--------------------------------- */
+const MAX_POINTS = {
+  1: {1:11,2:10,3:10,4:10,5:3},
+  2: {1:11,2:10,3:10,4:10,5:4},
+  3: {1:11,2:10,3:10,4:10,5:5},
+};
+
+const $ = (sel, el=document) => el.querySelector(sel);
+const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+function normalize(s){
+  return (s ?? "")
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g," ")
+    .replace(/[“”]/g,'"')
+    .replace(/[’]/g,"'")
+    .replace(/\u00A0/g," ");
+}
+
+function getLevel(){ return Number($('#level').value); }
+function storageKey(){ return "sp_dashboard_light_petrol_v4_task2_input"; }
+
+function saveState(){
+  const data = {};
+  $$('input[type="text"][data-id], textarea[data-id], select[data-id]').forEach(inp=>{
+    data[inp.dataset.id] = inp.value;
+  });
+  localStorage.setItem(storageKey(), JSON.stringify(data));
+}
+
+function loadState(){
+  const raw = localStorage.getItem(storageKey());
+  if(!raw) return;
+  let data;
+  try{ data = JSON.parse(raw) }catch{ return; }
+
+  $$('input[type="text"][data-id], textarea[data-id], select[data-id]').forEach(inp=>{
+    if(data[inp.dataset.id] !== undefined) inp.value = data[inp.dataset.id];
+  });
+}
+
+function resetAll(){
+  if(!confirm("Wirklich alles zurücksetzen? (Alle Eingaben werden gelöscht.)")) return;
+  localStorage.removeItem(storageKey());
+  $$('input[type="text"][data-id], textarea[data-id], select[data-id]').forEach(inp=>{
+    inp.value="";
+    inp.classList.remove("correct","wrong");
+  });
+  [1,2,3,4,5].forEach(clearFeedback);
+  pointsState = {1:0,2:0,3:0,4:0,5:0};
+  updateScore();
+}
+
+function showFeedback(task, html){
+  const fb = $('#fb'+task);
+  fb.classList.remove('hidden');
+  fb.innerHTML = html;
+}
+function clearFeedback(task){
+  const fb = $('#fb'+task);
+  fb.classList.add('hidden');
+  fb.innerHTML = "";
+}
+
+let pointsState = {1:0,2:0,3:0,4:0,5:0};
+
+function recomputeMax(){
+  const level = getLevel();
+  const max = Object.values(MAX_POINTS[level]).reduce((a,b)=>a+b,0);
+  $('#maxPoints').textContent = String(max);
+}
+function updateScore(){
+  const level = getLevel();
+  const pts = Object.values(pointsState).reduce((a,b)=>a+b,0);
+  const max = Object.values(MAX_POINTS[level]).reduce((a,b)=>a+b,0);
+  $('#points').textContent = String(pts);
+  $('#percent').textContent = String(max ? Math.round((pts/max)*100) : 0);
+}
+function award(task, pts){
+  pointsState[task] = pts;
+  updateScore();
+}
+
+/* -------------------------------
+   Render Task 1 (Dropdown L1/L2, Inputs L3)
+--------------------------------- */
+function optionListHTML(opts, placeholder="Bitte wählen…"){
+  const seen = new Set();
+  const dedup = (opts || []).filter(x=>{
+    const k = String(x);
+    if(seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+  return `
+    <option value="">${placeholder}</option>
+    ${dedup.map(o=>`<option value="${String(o).replaceAll('"','&quot;')}">${o}</option>`).join("")}
+  `;
+}
+
+function renderTask1(level){
+  const wrap = $(`#t1_l${level}`);
+  wrap.innerHTML = "";
+
+  const makeSelect = (id, opts, cls="blank") => `
+    <select class="${cls}" data-id="${id}">
+      ${optionListHTML(opts)}
+    </select>
+  `;
+
+  const makeInput = (id, cls="blank") => `
+    <input class="${cls}" type="text" data-id="${id}" placeholder="…" />
+  `;
+
+  const useDropdown = (level === 1 || level === 2);
+  const optKey = (level === 1) ? "l1" : "l2";
+  const opts = TASKS[1].options[optKey];
+
+  const b = (id, cls="blank") => useDropdown ? makeSelect(id, opts[id] || [], cls) : makeInput(id, cls);
+
+  wrap.innerHTML = `
+    <label>
+      Das <strong>Simple Present</strong> nutzt man für
+      ${b("sp1_fact","blank sm")}
+      (z. B. Fakten) und
+      ${b("sp1_habit","blank sm")}
+      (z. B. Gewohnheiten).
+    </label>
+    <div class="hr"></div>
+    <label>
+      Form: I / you / we / they + ${b("sp1_base","blank sm")}
+    </label>
+    <div class="hr"></div>
+    <label>
+      Bei <strong>he / she / it</strong> kommt meistens ein
+      ${b("sp1_s","blank.xs")}
+      ans Verb.
+    </label>
+    <div class="hr"></div>
+    <label>
+      Verneinung: I / you / we / they
+      ${b("sp1_dont","blank sm")}
+      – he / she / it
+      ${b("sp1_doesnt","blank sm")}
+    </label>
+    <div class="hr"></div>
+    <label>
+      Fragen starten mit
+      ${b("sp1_do","blank xs")}
+      oder
+      ${b("sp1_does","blank xs")}.
+    </label>
+    <div class="hr"></div>
+    <label>
+      Signalwörter sind z. B.:
+      ${b("sp1_sig1","blank sm")},
+      ${b("sp1_sig2","blank sm")},
+      ${b("sp1_sig3","blank sm")},
+      ${b("sp1_sig4","blank sm")}
+    </label>
+  `.replace('blank.xs','blank xs'); // safety
+}
+
+/* -------------------------------
+   Render Task 2 (Input with base verb in brackets)
+--------------------------------- */
+function renderTask2(level){
+  const wrap = $(`#t2_l${level}`);
+  wrap.innerHTML = "";
+  const items = TASKS[2][level];
+  items.forEach((it, idx)=>{
+    const id = `t2_l${level}_q${idx+1}`;
+    const row = document.createElement("div");
+    row.style.marginBottom = "10px";
+    row.innerHTML = `
+      <label>${idx+1}) ${it.sent} <span class="small mono">(${it.base})</span></label>
+      <input type="text" data-id="${id}" placeholder="Verbform" style="max-width:220px" />
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+function renderTask3(level){
+  const wrap = $(`#t3_l${level}`);
+  wrap.innerHTML = "";
+  const items = TASKS[3][level];
+  items.forEach((it, idx)=>{
+    const id = `t3_l${level}_q${idx+1}`;
+    const row = document.createElement("div");
+    row.style.marginBottom = "10px";
+    row.innerHTML = `
+      <label>${idx+1}) ${it.pos}</label>
+      <input type="text" data-id="${id}" placeholder="Schreibe den Satz negativ..." style="width:100%" />
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+function renderTask4(level){
+  const wrap = $(`#t4_l${level}`);
+  wrap.innerHTML = "";
+  const items = TASKS[4][level];
+  items.forEach((it, idx)=>{
+    const id = `t4_l${level}_q${idx+1}`;
+    const row = document.createElement("div");
+    row.style.marginBottom = "10px";
+    row.innerHTML = `
+      <label>${idx+1}) ${it.prompt}</label>
+      <input type="text" data-id="${id}" placeholder="Schreibe die Frage..." style="width:100%" />
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+/* -------------------------------
+   Level handling
+--------------------------------- */
+function setLevel(level){
+  $$('[data-level]').forEach(node=>{
+    node.classList.toggle('hidden', node.getAttribute('data-level') !== String(level));
+  });
+  recomputeMax();
+  loadState();
+  updateScore();
+}
+
+/* -------------------------------
+   Checking + highlighting
+--------------------------------- */
+function markField(el, ok){
+  el.classList.remove("correct","wrong");
+  el.classList.add(ok ? "correct" : "wrong");
+}
+
+function resultLine(got, max, hint){
+  const ok = got === max;
+  return `
+    <strong>${ok ? '✅' : '⚠️'} Ergebnis:</strong> ${got}/${max}<br>
+    <span class="small">${ok ? 'Stark! Weiter zur nächsten Aufgabe.' : hint}</span>
+  `;
+}
+
+function checkTask(task){
+  const level = getLevel();
+  saveState();
+  clearFeedback(task);
+
+  const taskEl = document.querySelector(`#task${task}`);
+  if(taskEl){
+    taskEl.querySelectorAll('input[type="text"][data-id], textarea[data-id], select[data-id]').forEach(inp=>{
+      inp.classList.remove("correct","wrong");
+    });
+  }
+
+  if(task === 1){
+    const sol = TASKS[1].solution;
+    let got = 0;
+    const keys = Object.keys(sol);
+    keys.forEach(id=>{
+      const el = document.querySelector(`[data-id="${id}"]`);
+      if(!el) return;
+      const ok = normalize(el.value) === normalize(sol[id]);
+      markField(el, ok);
+      if(ok) got++;
+    });
+    award(1, got);
+    showFeedback(1, `
+      <strong>${got === keys.length ? "✅ Sehr gut!" : "⚠️ Fast!"}</strong><br>
+      ${got}/${keys.length} richtig.
+      <div class="small">Tipp: Song-Spot: <span class="mono">facts & habits</span>, <span class="mono">he/she/it + s</span>.</div>
+    `);
+    return;
+  }
+
+  if(task === 2){
+    const items = TASKS[2][level];
+    let got = 0;
+    items.forEach((it, idx)=>{
+      const id = `t2_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      const ok = normalize(inp.value) === normalize(it.sol);
+      markField(inp, ok);
+      if(ok) got++;
+    });
+    award(2, got);
+    showFeedback(2, resultLine(got, 10, "Achte auf: he/she/it → -s/-es/-ies. (carry → carries, watch → watches)"));
+    return;
+  }
+
+  if(task === 3){
+    const items = TASKS[3][level];
+    let got = 0;
+    items.forEach((it, idx)=>{
+      const id = `t3_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      const ok = normalize(inp.value) === normalize(it.neg);
+      markField(inp, ok);
+      if(ok) got++;
+    });
+    award(3, got);
+    showFeedback(3, resultLine(got, 10, "Form: don’t/doesn’t + Verb (Grundform)."));
+    return;
+  }
+
+  if(task === 4){
+    const items = TASKS[4][level];
+    let got = 0;
+    items.forEach((it, idx)=>{
+      const id = `t4_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      const ok = normalize(inp.value) === normalize(it.sol);
+      markField(inp, ok);
+      if(ok) got++;
+    });
+    award(4, got);
+    showFeedback(4, resultLine(got, 10, "Wortstellung: Do/Does + subject + verb ... ?"));
+    return;
+  }
+
+  if(task === 5){
+    const txtId = level===1 ? "t5_l1_txt" : level===2 ? "t5_l2_txt" : "t5_l3_txt";
+    const ta = document.querySelector(`[data-id="${txtId}"]`);
+    const text = normalize(ta.value);
+
+    const hasSignal = /(always|often|sometimes|never|every day|on mondays|at)/.test(text);
+    const hasNeg = /(don't|doesn't|do not|does not)\s+/.test(text);
+    const hasQ = /\?/.test(text);
+    const hasSomeVerb = /\b(get|gets|go|goes|do|does|have|has|watch|watches|carry|carries|study|studies|try|tries|fix|fixes|teach|teaches|brush|brushes)\b/.test(text);
+
+    let got = 0;
+    if(hasSomeVerb) got++;
+    if(hasSignal) got++;
+    if(level>=2 && hasNeg) got++;
+    if(level===3 && hasQ) got++;
+
+    const max = MAX_POINTS[level][5];
+    got = Math.min(got, max);
+    award(5, got);
+
+    markField(ta, got === max);
+
+    showFeedback(5, `
+      <strong>Selbstkontrolle:</strong> ${got}/${max}<br>
+      <div class="small">
+        ${hasSomeVerb ? '<span class="okTxt">✔</span>' : '<span class="badTxt">✘</span>'} Simple-Present-Verb genutzt<br>
+        ${hasSignal ? '<span class="okTxt">✔</span>' : '<span class="badTxt">✘</span>'} Signalwort/Time expression genutzt<br>
+        ${level>=2 ? (hasNeg ? '<span class="okTxt">✔</span>' : '<span class="badTxt">✘</span>') + ' Verneinung (don’t/doesn’t)<br>' : ''}
+        ${level===3 ? (hasQ ? '<span class="okTxt">✔</span>' : '<span class="badTxt">✘</span>') + ' Frage (…?)<br>' : ''}
+      </div>
+    `);
+  }
+}
+
+function solutionTask(task){
+  const level = getLevel();
+  clearFeedback(task);
+
+  if(task === 1){
+    const sol = TASKS[1].solution;
+    Object.keys(sol).forEach(id=>{
+      const el = document.querySelector(`[data-id="${id}"]`);
+      if(el){
+        el.value = sol[id];
+        el.classList.remove("wrong");
+        el.classList.add("correct");
+      }
+    });
+    saveState();
+    showFeedback(1, `<strong>Musterlösung:</strong> Alle Lücken korrekt ausgefüllt.`);
+    return;
+  }
+
+  if(task === 2){
+    const items = TASKS[2][level];
+    items.forEach((it, idx)=>{
+      const id = `t2_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      inp.value = it.sol;
+      inp.classList.remove("wrong");
+      inp.classList.add("correct");
+    });
+    saveState();
+    showFeedback(2, `<strong>Musterlösung:</strong> Alle Verbformen wurden eingesetzt und markiert.`);
+    return;
+  }
+
+  if(task === 3){
+    const items = TASKS[3][level];
+    items.forEach((it, idx)=>{
+      const id = `t3_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      inp.value = it.neg;
+      inp.classList.remove("wrong");
+      inp.classList.add("correct");
+    });
+    saveState();
+    showFeedback(3, `<strong>Musterlösung:</strong> Alle negativen Sätze wurden eingesetzt und markiert.`);
+    return;
+  }
+
+  if(task === 4){
+    const items = TASKS[4][level];
+    items.forEach((it, idx)=>{
+      const id = `t4_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      inp.value = it.sol;
+      inp.classList.remove("wrong");
+      inp.classList.add("correct");
+    });
+    saveState();
+    showFeedback(4, `<strong>Musterlösung:</strong> Alle Fragen wurden eingesetzt und markiert.`);
+    return;
+  }
+
+  if(task === 5){
+    showFeedback(5, `<strong>Beispiel:</strong><br>
+      <div class="mono">
+        I often listen to music.<br>
+        She doesn't watch TV on Mondays.<br>
+        Does Tom go to school by bus?
+      </div>
+    `);
+  }
+}
+
+/* -------------------------------
+   Init
+--------------------------------- */
+function init(){
+  [1,2,3].forEach(l=>{
+    renderTask1(l);
+    renderTask2(l);
+    renderTask3(l);
+    renderTask4(l);
+  });
+
+  loadState();
+  recomputeMax();
+  setLevel(getLevel());
+  updateScore();
+}
+
+/* -------------------------------
+   Events
+--------------------------------- */
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest('[data-action]');
+  if(btn){
+    const action = btn.dataset.action;
+    const task = Number(btn.dataset.task);
+
+    if(action === 'check'){ checkTask(task); return; }
+    if(action === 'solution'){ solutionTask(task); return; }
+  }
+});
+
+document.addEventListener('input', (e)=>{
+  const t = e.target;
+  if(t.matches('input[type="text"][data-id], textarea[data-id]')) saveState();
+});
+
+document.addEventListener('change', (e)=>{
+  if(e.target.matches('select[data-id]')) saveState();
+});
+
+document.getElementById('level').addEventListener('change', ()=> setLevel(getLevel()));
+document.getElementById('btnSave').addEventListener('click', ()=> { saveState(); alert("Gespeichert ✅"); });
+document.getElementById('btnReset').addEventListener('click', resetAll);
+
+document.getElementById('btnCheckAll').addEventListener('click', ()=>{
+  [1,2,3,4,5].forEach(checkTask);
+});
+document.getElementById('btnShowAll').addEventListener('click', ()=>{
+  [1,2,3,4,5].forEach(solutionTask);
+});
+
+init();
+</script>
+</body>
+</html>
