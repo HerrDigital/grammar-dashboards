@@ -1,0 +1,1135 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple Past – Digitales Übungsdashboard (Kl. 7)</title>
+
+  <style>
+    :root{
+      --bg:#f4f6f8;
+      --panel:#ffffff;
+      --panel2:#f0f2f4;
+      --text:#1b2430;
+      --muted:#5b6674;
+      --line:#d7dde3;
+
+      --petrol:#167d7f;
+      --petrolSoft:#e7f4f4;
+      --petrolSoft2:#d6eeee;
+
+      --ok:#1f9d55;
+      --okBg:#e8f7ee;
+
+      --bad:#d62839;
+      --badBg:#fdecee;
+
+      --shadow: 0 8px 20px rgba(17, 34, 51, .08);
+      --radius:16px;
+
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg) 55%);
+      min-height:100vh;
+    }
+
+    header{
+      max-width:1160px;
+      margin:0 auto;
+      padding:18px 18px 8px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .title{display:flex;flex-direction:column;gap:4px;}
+    h1{margin:0;font-size:22px;letter-spacing:.2px;}
+    .sub{margin:0;color:var(--muted);font-size:13px;}
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      background:var(--panel);
+      border:1px solid var(--line);
+      padding:10px 12px;
+      border-radius:999px;
+      box-shadow:var(--shadow);
+    }
+
+    .header-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .brand-logo{height:34px;width:auto;opacity:.65;filter:saturate(0.95);}
+    @media (max-width:600px){.brand-logo{height:30px;opacity:.55;}}
+
+    label{font-size:13px;color:var(--muted);}
+
+    select, input[type="text"], textarea{
+      background:var(--panel2);
+      border:1px solid var(--line);
+      color:var(--text);
+      padding:9px 10px;
+      border-radius:10px;
+      outline:none;
+    }
+    select{cursor:pointer}
+
+    main{max-width:1160px;margin:0 auto;padding:10px 18px 34px;}
+
+    .grid{display:grid;grid-template-columns:1.25fr .75fr;gap:16px;}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}}
+
+    .card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+    .card h2{margin:0 0 10px;font-size:16px}
+    .card h3{margin:0 0 8px;font-size:14px;color:var(--muted);font-weight:700}
+
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+    .btn{
+      border:1px solid var(--line);
+      background:var(--panel);
+      color:var(--text);
+      padding:9px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:.15s transform,.15s background;
+      font-size:13px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:var(--petrol);border-color:var(--petrol);color:#fff;}
+    .btn.secondary{background:var(--petrolSoft);border-color:var(--petrolSoft2);color:var(--petrol);}
+    .btn.ghost{background:transparent}
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:var(--petrolSoft);
+      border:1px solid var(--petrolSoft2);
+      color:var(--petrol);
+      font-size:12px;
+      margin-right:8px;
+      margin-bottom:8px;
+      font-weight:600;
+    }
+
+    .hr{height:1px;background:var(--line);margin:14px 0}
+
+    .score{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      background: linear-gradient(180deg, var(--petrolSoft) 0%, #fff 70%);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px 14px;
+    }
+
+    .tag{
+      padding:3px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    .task{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      background:#fff;
+      margin-top:12px;
+    }
+
+    .task-header{
+      display:flex;
+      gap:10px;
+      justify-content:space-between;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+
+    .task-title{font-weight:800;font-size:14px}
+    .task-desc{color:var(--muted);font-size:13px;margin:6px 0 0}
+
+    .q{padding:12px 0;border-top:1px dashed var(--line);}
+    .q:first-child{border-top:none;padding-top:0}
+
+    .small{font-size:12px;color:var(--muted)}
+    .mono{font-family:var(--mono)}
+
+    .feedback{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      font-size:13px;
+      color:var(--muted);
+    }
+    .hidden{display:none !important}
+
+    input.correct, textarea.correct, select.correct{
+      border-color: rgba(31,157,85,.55) !important;
+      background: var(--okBg) !important;
+    }
+    input.wrong, textarea.wrong, select.wrong{
+      border-color: rgba(214,40,57,.55) !important;
+      background: var(--badBg) !important;
+    }
+
+    .okTxt{color:var(--ok);font-weight:800}
+
+    .sectionHint{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+    .count{font-size:12px;color:var(--muted);font-weight:700}
+
+    /* Aufgabe 1 – Lückentext wie Simple Present */
+    .clozeBlock{display:grid;gap:10px;margin-top:8px;}
+    .clozeRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      padding:10px 0;
+      border-top:1px solid var(--line);
+    }
+    .clozeRow:first-child{border-top:none;padding-top:0}
+    .clozeLabel{font-weight:800;color:var(--text);min-width:220px}
+    .clozeInline{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .clozeInline select{min-width:170px}
+    @media (max-width:640px){
+      .clozeLabel{min-width:0;flex-basis:100%}
+      .clozeInline select{min-width:140px}
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="title">
+    <h1>Simple Past – Digitales Übungsdashboard</h1>
+    <p class="sub">Übersichtlich · 3 Niveaustufen · Selbstkontrolle · Ergebnisse farbig markiert (Petrol/Grün)</p>
+  </div>
+
+  <div class="header-right">
+    <div class="toolbar" role="region" aria-label="Einstellungen">
+      <a class="btn secondary" href="../index.html" title="Zur Übersicht">↩︎ Zurück zur Übersicht</a>
+
+      <label for="level">Niveau:</label>
+      <select id="level">
+        <option value="1">Niveau 1 (leicht)</option>
+        <option value="2" selected>Niveau 2 (Standard)</option>
+        <option value="3">Niveau 3 (anspruchsvoll)</option>
+      </select>
+
+      <button class="btn ghost" id="btnSave" title="Speichern">💾 Speichern</button>
+      <button class="btn ghost" id="btnReset">↩︎ Zurücksetzen</button>
+    </div>
+
+    <img class="brand-logo"
+         src="https://i.ibb.co/M5NS6qnJ/Chat-GPT-Image-24-Nov-2025-15-48-13.png"
+         alt="Firmenlogo" />
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+    <section class="card" aria-label="Aufgabenbereich">
+
+      <div class="score" aria-label="Übersicht">
+        <div>
+          <strong>Dein Stand:</strong>
+          <div class="small">Bearbeite die Aufgaben → klicke <span class="mono">Prüfen</span> → korrekte Antworten werden farbig markiert.</div>
+        </div>
+        <div class="row">
+          <span class="tag">Punkte: <span id="points">0</span>/<span id="maxPoints">0</span></span>
+          <span class="tag">Erfolg: <span id="percent">0</span>%</span>
+        </div>
+      </div>
+
+      <!-- Merkkasten -->
+      <div class="task" id="task0">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Merkkasten</div>
+            <div class="task-desc">
+              Verwendung: abgeschlossene Handlungen in der Vergangenheit · Regular: <span class="mono">verb + -ed</span> · Fragen/Negation: <span class="mono">did / didn’t + infinitive</span>
+            </div>
+          </div>
+          <div class="row">
+            <button class="btn ghost" data-action="toggleHelp" data-target="help0">Merkkasten anzeigen</button>
+          </div>
+        </div>
+        <div id="help0" class="feedback hidden">
+          <div>
+            <span class="pill">Regular: add “-ed”</span>
+            <span class="pill">Irregular: learn forms</span>
+            <span class="pill">Did / didn’t + base form</span>
+          </div>
+          <div class="hr"></div>
+          <div><strong>Signalwörter (Song):</strong> <span class="mono">yesterday · last week · back then · once upon a time · ago</span></div>
+          <div class="small">Tipp: Bei <span class="mono">did/didn’t</span> bleibt das Verb im <strong>Infinitiv</strong>.</div>
+        </div>
+      </div>
+
+      <!-- Aufgabe 1 (wie Simple Present) -->
+      <div class="task" id="task1">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 1: Merkkasten (Lückentext) (10)</div>
+            <div class="task-desc">Ergänze die wichtigsten Regeln zum <strong>Simple Past</strong>. Tipp: Song (Chorus/Verse) + Merkkasten.</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" data-action="check" data-task="1">Prüfen</button>
+            <button class="btn" data-action="solution" data-task="1">Musterlösung</button>
+          </div>
+        </div>
+
+        <div class="q" data-level="1" id="t1_l1"></div>
+        <div class="q" data-level="2" id="t1_l2"></div>
+        <div class="q" data-level="3" id="t1_l3"></div>
+
+        <div id="fb1" class="feedback hidden"></div>
+      </div>
+
+      <!-- Aufgabe 2 -->
+      <div class="task" id="task2">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 2: Regular Verbs – -ed (10)</div>
+            <div class="task-desc">Ergänze das Verb im Simple Past. Verb ist in Grundform vorgegeben.</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" data-action="check" data-task="2">Prüfen</button>
+            <button class="btn ghost" data-action="solution" data-task="2">Musterlösung</button>
+          </div>
+        </div>
+        <div class="sectionHint">
+          <div class="small">Tipp: <span class="mono">try→tried</span>, <span class="mono">stop→stopped</span>, <span class="mono">plan→planned</span>, <span class="mono">study→studied</span></div>
+          <div class="count">10 Items</div>
+        </div>
+
+        <div class="q" data-level="1" id="t2_l1"></div>
+        <div class="q" data-level="2" id="t2_l2"></div>
+        <div class="q" data-level="3" id="t2_l3"></div>
+
+        <div id="fb2" class="feedback hidden"></div>
+      </div>
+
+      <!-- Aufgabe 3 -->
+      <div class="task" id="task3">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 3: Irregular Verbs – unregelmäßige Formen (10)</div>
+            <div class="task-desc">Trage die Simple-Past-Form ein. (Bonus: Manche kommen im Song vor.)</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" data-action="check" data-task="3">Prüfen</button>
+            <button class="btn ghost" data-action="solution" data-task="3">Musterlösung</button>
+          </div>
+        </div>
+        <div class="sectionHint">
+          <div class="small">Song-Bridge (Beispiele): <span class="mono">run→ran</span>, <span class="mono">have→had</span>, <span class="mono">say→said</span></div>
+          <div class="count">10 Items</div>
+        </div>
+
+        <div class="q" data-level="1" id="t3_l1"></div>
+        <div class="q" data-level="2" id="t3_l2"></div>
+        <div class="q" data-level="3" id="t3_l3"></div>
+
+        <div id="fb3" class="feedback hidden"></div>
+      </div>
+
+      <!-- Aufgabe 4 -->
+      <div class="task" id="task4">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 4: Fragen – Did … ? (10)</div>
+            <div class="task-desc">Bilde Fragen mit <span class="mono">did</span>. Danach steht das Verb im Infinitiv.</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" data-action="check" data-task="4">Prüfen</button>
+            <button class="btn ghost" data-action="solution" data-task="4">Musterlösung</button>
+          </div>
+        </div>
+        <div class="sectionHint">
+          <div class="small">Wortstellung: <span class="mono">Did + subject + base verb … ?</span></div>
+          <div class="count">10 Items</div>
+        </div>
+
+        <div class="q" data-level="1" id="t4_l1"></div>
+        <div class="q" data-level="2" id="t4_l2"></div>
+        <div class="q" data-level="3" id="t4_l3"></div>
+
+        <div id="fb4" class="feedback hidden"></div>
+      </div>
+
+      <!-- Aufgabe 5 -->
+      <div class="task" id="task5">
+        <div class="task-header">
+          <div>
+            <div class="task-title">Aufgabe 5: Verneinungen & be (was/were) (10)</div>
+            <div class="task-desc">Mische-Training: Verneine mit <span class="mono">didn’t</span> (Verb bleibt Grundform) und ergänze <span class="mono">was/were</span>.</div>
+          </div>
+          <div class="row">
+            <button class="btn primary" data-action="check" data-task="5">Prüfen</button>
+            <button class="btn ghost" data-action="solution" data-task="5">Musterlösung</button>
+          </div>
+        </div>
+        <div class="sectionHint">
+          <div class="small">Tipp: Bei <span class="mono">be</span>: <span class="mono">was/were</span> oder <span class="mono">wasn’t/weren’t</span> (ohne did).</div>
+          <div class="count">10 Items</div>
+        </div>
+
+        <div class="q" data-level="1" id="t5_l1"></div>
+        <div class="q" data-level="2" id="t5_l2"></div>
+        <div class="q" data-level="3" id="t5_l3"></div>
+
+        <div id="fb5" class="feedback hidden"></div>
+      </div>
+
+    </section>
+
+    <!-- Sidebar -->
+    <aside class="card" aria-label="Song & Schnellhilfe">
+      <h2>Schnellhilfe</h2>
+      <div class="pill">Past: verb + -ed (regular)</div>
+      <div class="pill">Did / didn’t + base verb</div>
+      <div class="pill">Signalwörter (yesterday, last week…)</div>
+
+      <div class="hr"></div>
+      <h3>Dashboard-Steuerung</h3>
+      <div class="row">
+        <button class="btn" id="btnCheckAll">Alles prüfen</button>
+        <button class="btn ghost" id="btnShowAll">Alle Lösungen anzeigen</button>
+      </div>
+
+      <div class="hr"></div>
+      <div class="feedback">
+        <strong>Hinweis:</strong> Eingaben werden lokal im Browser gespeichert (localStorage).
+      </div>
+
+      <div class="hr"></div>
+      <h3>Song-Reminder</h3>
+      <div class="feedback">
+        <div class="mono">Add “-ed”, use “did”, tell the past.</div>
+        <div class="small">Tipp: Achte im Song besonders auf <span class="mono">yesterday / last week / ago</span>.</div>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<script>
+/* -------------------------------
+   CONTENT
+--------------------------------- */
+
+// Aufgabe 1: Lückentext wie Simple Present (Dropdowns)
+const TASK1 = {
+  1: {
+    usage1:{opts:["abgeschlossene","zukünftige","gerade stattfindende"], sol:"abgeschlossene"},
+    usage2:{opts:["Handlungen","Gewohnheiten","Regeln"], sol:"Handlungen"},
+    reg:{opts:["-ed","-ing","-s"], sol:"-ed"},
+    qStart:{opts:["Did","Do","Does"], sol:"Did"},
+    neg:{opts:["didn’t","don’t","doesn’t"], sol:"didn’t"},
+    base:{opts:["Grundform","Past Form","3.Form"], sol:"Grundform"},
+    be1:{opts:["was","were"], sol:"was"},
+    be2:{opts:["were","was"], sol:"were"},
+    sig1:{opts:["yesterday","now","every day"], sol:"yesterday"},
+    sig2:{opts:["last week","right now","at the moment"], sol:"last week"},
+  },
+  2: {
+    usage1:{opts:["abgeschlossene","zukünftige","gleichzeitige"], sol:"abgeschlossene"},
+    usage2:{opts:["Ereignisse","Gewohnheiten","Pläne"], sol:"Ereignisse"},
+    reg:{opts:["-ed","-ing","-s"], sol:"-ed"},
+    qStart:{opts:["Did","Do","Does","Have"], sol:"Did"},
+    neg:{opts:["didn’t","don’t","doesn’t","haven’t"], sol:"didn’t"},
+    base:{opts:["Grundform","Past Form","3.  Form","-ing"], sol:"Grundform"},
+    be1:{opts:["was","were"], sol:"was"},
+    be2:{opts:["were","was"], sol:"were"},
+    sig1:{opts:["yesterday","today","every day"], sol:"yesterday"},
+    sig2:{opts:["ago","now","often"], sol:"ago"},
+  },
+  3: {
+    usage1:{opts:["abgeschlossene","zukünftige","wiederholte"], sol:"abgeschlossene"},
+    usage2:{opts:["Handlungen","Fakten","Wünsche"], sol:"Handlungen"},
+    reg:{opts:["-ed","-ing","-s"], sol:"-ed"},
+    qStart:{opts:["Did","Do","Does","Have"], sol:"Did"},
+    neg:{opts:["didn’t","don’t","doesn’t"], sol:"didn’t"},
+    base:{opts:["base form","past form","3. Form"], sol:"base form"},
+    be1:{opts:["was","were"], sol:"was"},
+    be2:{opts:["were","was"], sol:"were"},
+    sig1:{opts:["back then","right now","tomorrow"], sol:"back then"},
+    sig2:{opts:["once upon a time","at the moment","next week"], sol:"once upon a time"},
+  }
+};
+
+// Aufgabe 2–5 wie vorher (je 10)
+const TASKS = {
+  2: {
+    1: [
+      {sent:"Yesterday, I ________ to the park. (walk)", sol:"walked"},
+      {sent:"Josh ________ football last weekend. (play)", sol:"played"},
+      {sent:"Leyla ________ home during the storm. (stay)", sol:"stayed"},
+      {sent:"Paul ________ his homework yesterday. (finish)", sol:"finished"},
+      {sent:"They ________ to their grandparents. (talk)", sol:"talked"},
+      {sent:"I ________ the window in the evening. (close)", sol:"closed"},
+      {sent:"We ________ at the joke. (laugh)", sol:"laughed"},
+      {sent:"She ________ the door and smiled. (open)", sol:"opened"},
+      {sent:"I ________ my friend after school. (call)", sol:"called"},
+      {sent:"We ________ TV last night. (watch)", sol:"watched"},
+    ],
+    2: [
+      {sent:"We ________ the game after school. (start)", sol:"started"},
+      {sent:"She ________ her friend a letter. (try)", sol:"tried"},
+      {sent:"He ________ the bus at 7. (miss)", sol:"missed"},
+      {sent:"They ________ the story. (enjoy)", sol:"enjoyed"},
+      {sent:"I ________ the music louder. (turn)", sol:"turned"},
+      {sent:"We ________ our teacher after class. (ask)", sol:"asked"},
+      {sent:"He ________ the bag to school. (carry)", sol:"carried"},
+      {sent:"They ________ the last question. (answer)", sol:"answered"},
+      {sent:"I ________ my room on Saturday. (clean)", sol:"cleaned"},
+      {sent:"She ________ at the door. (knock)", sol:"knocked"},
+    ],
+    3: [
+      {sent:"We ________ for the test yesterday. (study)", sol:"studied"},
+      {sent:"She ________ the ball twice. (stop)", sol:"stopped"},
+      {sent:"He ________ the cake carefully. (bake)", sol:"baked"},
+      {sent:"They ________ the lights at 9 p.m. (switch)", sol:"switched"},
+      {sent:"I ________ to the email quickly. (reply)", sol:"replied"},
+      {sent:"We ________ the story to the class. (explain)", sol:"explained"},
+      {sent:"She ________ the rule correctly. (apply)", sol:"applied"},
+      {sent:"He ________ the room after the party. (tidy)", sol:"tidied"},
+      {sent:"They ________ the plan again. (plan)", sol:"planned"},
+      {sent:"I ________ classical music last week. (prefer)", sol:"preferred"},
+    ],
+  },
+  3: {
+    1: [
+      {base:"go", sol:"went"},
+      {base:"come", sol:"came"},
+      {base:"see", sol:"saw"},
+      {base:"eat", sol:"ate"},
+      {base:"write", sol:"wrote"},
+      {base:"ride", sol:"rode"},
+      {base:"wake", sol:"woke"},
+      {base:"have", sol:"had"},
+      {base:"do", sol:"did"},
+      {base:"make", sol:"made"},
+    ],
+    2: [
+      {base:"begin", sol:"began"},
+      {base:"bring", sol:"brought"},
+      {base:"find", sol:"found"},
+      {base:"hear", sol:"heard"},
+      {base:"know", sol:"knew"},
+      {base:"leave", sol:"left"},
+      {base:"meet", sol:"met"},
+      {base:"read", sol:"read"},
+      {base:"take", sol:"took"},
+      {base:"think", sol:"thought"},
+    ],
+    3: [
+      {base:"choose", sol:"chose"},
+      {base:"drive", sol:"drove"},
+      {base:"feel", sol:"felt"},
+      {base:"give", sol:"gave"},
+      {base:"hold", sol:"held"},
+      {base:"pay", sol:"paid"},
+      {base:"sell", sol:"sold"},
+      {base:"send", sol:"sent"},
+      {base:"sleep", sol:"slept"},
+      {base:"stand", sol:"stood"},
+    ],
+  },
+  4: {
+    1: [
+      {prompt:"you / walk to school", sol:"Did you walk to school?"},
+      {prompt:"she / play the piano", sol:"Did she play the piano?"},
+      {prompt:"he / talk to the teacher", sol:"Did he talk to the teacher?"},
+      {prompt:"they / go to the park", sol:"Did they go to the park?"},
+      {prompt:"you / finish your homework", sol:"Did you finish your homework?"},
+      {prompt:"he / eat breakfast", sol:"Did he eat breakfast?"},
+      {prompt:"they / stay home", sol:"Did they stay home?"},
+      {prompt:"she / watch TV", sol:"Did she watch TV?"},
+      {prompt:"you / play football", sol:"Did you play football?"},
+      {prompt:"it / rain yesterday", sol:"Did it rain yesterday?"},
+    ],
+    2: [
+      {prompt:"you / call your friend / yesterday", sol:"Did you call your friend yesterday?"},
+      {prompt:"she / walk to the park / last week", sol:"Did she walk to the park last week?"},
+      {prompt:"he / start the game / after school", sol:"Did he start the game after school?"},
+      {prompt:"they / enjoy the story", sol:"Did they enjoy the story?"},
+      {prompt:"you / study yesterday evening", sol:"Did you study yesterday evening?"},
+      {prompt:"he / miss the bus", sol:"Did he miss the bus?"},
+      {prompt:"she / reply to the email", sol:"Did she reply to the email?"},
+      {prompt:"they / switch off the lights", sol:"Did they switch off the lights?"},
+      {prompt:"you / clean your room", sol:"Did you clean your room?"},
+      {prompt:"she / tidy the room", sol:"Did she tidy the room?"},
+    ],
+    3: [
+      {prompt:"you / go / to the cinema / last night", sol:"Did you go to the cinema last night?"},
+      {prompt:"they / write / in their journal", sol:"Did they write in their journal?"},
+      {prompt:"he / meet / his neighbour", sol:"Did he meet his neighbour?"},
+      {prompt:"she / decide / to go for a walk", sol:"Did she decide to go for a walk?"},
+      {prompt:"you / see / the teacher / yesterday", sol:"Did you see the teacher yesterday?"},
+      {prompt:"they / continue / their walk", sol:"Did they continue their walk?"},
+      {prompt:"he / say / hello", sol:"Did he say hello?"},
+      {prompt:"she / talk / for a while", sol:"Did she talk for a while?"},
+      {prompt:"you / take / the bus / back then", sol:"Did you take the bus back then?"},
+      {prompt:"they / begin / the lesson / on time", sol:"Did they begin the lesson on time?"},
+    ],
+  },
+  5: {
+    1: [
+      {pos:"He ran to catch the bus.", sol:"He didn't run to catch the bus."},
+      {pos:"We talked about the project.", sol:"We didn't talk about the project."},
+      {pos:"They stayed in the hotel.", sol:"They didn't stay in the hotel."},
+      {pos:"I flew to New York.", sol:"I didn't fly to New York."},
+      {pos:"My parents ___ at the supermarket. (be)", sol:"My parents were at the supermarket."},
+      {pos:"Steve ___ thirsty. (be)", sol:"Steve was thirsty."},
+      {pos:"She played the piano.", sol:"She didn't play the piano."},
+      {pos:"They went to the park.", sol:"They didn't go to the park."},
+      {pos:"I ___ late yesterday. (be)", sol:"I was late yesterday."},
+      {pos:"We ___ happy last week. (be)", sol:"We were happy last week."},
+    ],
+    2: [
+      {pos:"I played football yesterday.", sol:"I didn't play football yesterday."},
+      {pos:"He carried the bag.", sol:"He didn't carry the bag."},
+      {pos:"They replied to the email.", sol:"They didn't reply to the email."},
+      {pos:"We met after school.", sol:"We didn't meet after school."},
+      {pos:"They ___ at home last night. (be)", sol:"They were at home last night."},
+      {pos:"It ___ cold yesterday. (be)", sol:"It was cold yesterday."},
+      {pos:"You ___ in class last week. (be)", sol:"You were in class last week."},
+      {pos:"She studied in the evening.", sol:"She didn't study in the evening."},
+      {pos:"They enjoyed the story.", sol:"They didn't enjoy the story."},
+      {pos:"He missed the bus.", sol:"He didn't miss the bus."},
+    ],
+    3: [
+      {pos:"She planned the trip.", sol:"She didn't plan the trip."},
+      {pos:"They chose a new song.", sol:"They didn't choose a new song."},
+      {pos:"He sent the email.", sol:"He didn't send the email."},
+      {pos:"We drove to the city.", sol:"We didn't drive to the city."},
+      {pos:"I wrote in my journal.", sol:"I didn't write in my journal."},
+      {pos:"The kids ___ noisy yesterday. (be)", sol:"The kids were noisy yesterday."},
+      {pos:"My friend ___ tired last night. (be)", sol:"My friend was tired last night."},
+      {pos:"They preferred tea.", sol:"They didn't prefer tea."},
+      {pos:"We explained the rule.", sol:"We didn't explain the rule."},
+      {pos:"He stopped the game.", sol:"He didn't stop the game."},
+    ],
+  }
+};
+
+const MAX_POINTS = {
+  1: {1:10,2:10,3:10,4:10,5:10},
+  2: {1:10,2:10,3:10,4:10,5:10},
+  3: {1:10,2:10,3:10,4:10,5:10},
+};
+
+const $ = (sel, el=document) => el.querySelector(sel);
+const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+function normalize(s){
+  return (s ?? "")
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g," ")
+    .replace(/[“”]/g,'"')
+    .replace(/[’]/g,"'")
+    .replace(/\u00A0/g," ");
+}
+
+function getLevel(){ return Number($('#level').value); }
+function storageKey(){ return "simple_past_dashboard_light_petrol_v2"; }
+
+function saveState(){
+  const data = {};
+  $$('input[type="text"][data-id], textarea[data-id]').forEach(inp=> data[inp.dataset.id] = inp.value );
+  $$('select[data-id]').forEach(sel=> data[sel.dataset.id] = sel.value );
+  localStorage.setItem(storageKey(), JSON.stringify(data));
+}
+function loadState(){
+  const raw = localStorage.getItem(storageKey());
+  if(!raw) return;
+  let data; try{ data = JSON.parse(raw) }catch{ return; }
+
+  $$('input[type="text"][data-id], textarea[data-id]').forEach(inp=>{
+    if(data[inp.dataset.id] !== undefined) inp.value = data[inp.dataset.id];
+  });
+  $$('select[data-id]').forEach(sel=>{
+    if(data[sel.dataset.id] !== undefined) sel.value = data[sel.dataset.id];
+  });
+}
+
+function resetAll(){
+  if(!confirm("Wirklich alles zurücksetzen? (Alle Eingaben werden gelöscht.)")) return;
+  localStorage.removeItem(storageKey());
+  $$('input[type="text"][data-id], textarea[data-id]').forEach(inp=>{
+    inp.value="";
+    inp.classList.remove("correct","wrong");
+  });
+  $$('select[data-id]').forEach(sel=>{
+    sel.value="";
+    sel.classList.remove("correct","wrong");
+  });
+  [1,2,3,4,5].forEach(clearFeedback);
+  pointsState = {1:0,2:0,3:0,4:0,5:0};
+  updateScore();
+}
+
+function showFeedback(task, html){
+  const fb = $('#fb'+task);
+  fb.classList.remove('hidden');
+  fb.innerHTML = html;
+}
+function clearFeedback(task){
+  const fb = $('#fb'+task);
+  fb.classList.add('hidden');
+  fb.innerHTML = "";
+}
+
+let pointsState = {1:0,2:0,3:0,4:0,5:0};
+
+function recomputeMax(){
+  const level = getLevel();
+  const max = Object.values(MAX_POINTS[level]).reduce((a,b)=>a+b,0);
+  $('#maxPoints').textContent = String(max);
+}
+function updateScore(){
+  const level = getLevel();
+  const pts = Object.values(pointsState).reduce((a,b)=>a+b,0);
+  const max = Object.values(MAX_POINTS[level]).reduce((a,b)=>a+b,0);
+  $('#points').textContent = String(pts);
+  $('#percent').textContent = String(max ? Math.round((pts/max)*100) : 0);
+}
+function award(task, pts){
+  pointsState[task] = pts;
+  updateScore();
+}
+
+function markField(el, ok){
+  el.classList.remove("correct","wrong");
+  el.classList.add(ok ? "correct" : "wrong");
+}
+
+function resultLine(got, max, hint){
+  const ok = got === max;
+  return `
+    <strong>${ok ? '✅' : '⚠️'} Ergebnis:</strong> ${got}/${max}<br>
+    <span class="small">${ok ? 'Stark! Weiter zur nächsten Aufgabe.' : hint}</span>
+  `;
+}
+
+/* -------- Render helpers -------- */
+function renderTask1LikeSimplePresent(level){
+  const wrap = document.getElementById(`t1_l${level}`);
+  wrap.innerHTML = "";
+
+  const cfg = TASK1[level];
+
+  const mkSel = (id, opts) => `
+    <select data-id="${id}">
+      <option value="">Bitte wählen…</option>
+      ${opts.map(o=>`<option value="${o}">${o}</option>`).join("")}
+    </select>
+  `;
+
+  wrap.innerHTML = `
+    <div class="clozeBlock">
+
+      <div class="clozeRow">
+        <div class="clozeLabel">Das Simple Past nutzt man für</div>
+        <div class="clozeInline">
+          ${mkSel(`t1_l${level}_usage1`, cfg.usage1.opts)}
+          <span>Handlungen und</span>
+          ${mkSel(`t1_l${level}_usage2`, cfg.usage2.opts)}
+          <span>.</span>
+        </div>
+      </div>
+
+      <div class="clozeRow">
+        <div class="clozeLabel">Form (regular verbs): verb +</div>
+        <div class="clozeInline">
+          ${mkSel(`t1_l${level}_reg`, cfg.reg.opts)}
+        </div>
+      </div>
+
+      <div class="clozeRow">
+        <div class="clozeLabel">Fragen starten mit</div>
+        <div class="clozeInline">
+          ${mkSel(`t1_l${level}_qStart`, cfg.qStart.opts)}
+          <span>+ subject + base verb.</span>
+        </div>
+      </div>
+
+      <div class="clozeRow">
+        <div class="clozeLabel">Verneinung bildet man mit</div>
+        <div class="clozeInline">
+          ${mkSel(`t1_l${level}_neg`, cfg.neg.opts)}
+          <span>+ base verb.</span>
+        </div>
+      </div>
+
+      <div class="clozeRow">
+        <div class="clozeLabel">Nach did/didn’t steht das Verb in</div>
+        <div class="clozeInline">
+          ${mkSel(`t1_l${level}_base`, cfg.base.opts)}
+          <span>.</span>
+        </div>
+      </div>
+
+      <div class="clozeRow">
+        <div class="clozeLabel">Ausnahme (be)</div>
+        <div class="clozeInline">
+          <span>I / he / she / it →</span>
+          ${mkSel(`t1_l${level}_be1`, cfg.be1.opts)}
+          <span>· we / you / they →</span>
+          ${mkSel(`t1_l${level}_be2`, cfg.be2.opts)}
+        </div>
+      </div>
+
+      <div class="clozeRow">
+        <div class="clozeLabel">Signalwörter sind z. B.</div>
+        <div class="clozeInline">
+          ${mkSel(`t1_l${level}_sig1`, cfg.sig1.opts)}
+          <span>,</span>
+          ${mkSel(`t1_l${level}_sig2`, cfg.sig2.opts)}
+        </div>
+      </div>
+
+      <div class="small" style="margin-top:8px;">
+        Tipp: Im Song findest du Beispiele bei <span class="mono">yesterday / last week / ago</span> und bei <span class="mono">Did</span>.
+      </div>
+    </div>
+  `;
+
+  loadState(); // restore select values after re-render
+}
+
+function renderFill(targetId, items, prefix){
+  const wrap = document.getElementById(targetId);
+  wrap.innerHTML = "";
+  items.forEach((it, idx)=>{
+    const id = `${prefix}_q${idx+1}`;
+    const row = document.createElement("div");
+    row.style.marginBottom = "10px";
+    row.innerHTML = `
+      <label>${idx+1}) ${it.sent}</label>
+      <input type="text" data-id="${id}" placeholder="Antwort ..." style="width:100%" />
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+function renderVerbList(targetId, items, prefix){
+  const wrap = document.getElementById(targetId);
+  wrap.innerHTML = "";
+  items.forEach((it, idx)=>{
+    const id = `${prefix}_q${idx+1}`;
+    const row = document.createElement("div");
+    row.style.marginBottom = "10px";
+    row.innerHTML = `
+      <label>${idx+1}) (to) <strong>${it.base}</strong> → Simple Past:
+        <input type="text" data-id="${id}" placeholder="..." style="max-width:180px" />
+      </label>
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+function renderQuestions(targetId, items, prefix){
+  const wrap = document.getElementById(targetId);
+  wrap.innerHTML = "";
+  items.forEach((it, idx)=>{
+    const id = `${prefix}_q${idx+1}`;
+    const row = document.createElement("div");
+    row.style.marginBottom = "10px";
+    row.innerHTML = `
+      <label>${idx+1}) ${it.prompt}</label>
+      <input type="text" data-id="${id}" placeholder="Schreibe die Frage..." style="width:100%" />
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+function renderMixed(targetId, items, prefix){
+  const wrap = document.getElementById(targetId);
+  wrap.innerHTML = "";
+  items.forEach((it, idx)=>{
+    const id = `${prefix}_q${idx+1}`;
+    const row = document.createElement("div");
+    row.style.marginBottom = "10px";
+    row.innerHTML = `
+      <label>${idx+1}) ${it.pos}</label>
+      <input type="text" data-id="${id}" placeholder="Antwort ..." style="width:100%" />
+    `;
+    wrap.appendChild(row);
+  });
+}
+
+function setLevel(level){
+  $$('[data-level]').forEach(node=>{
+    node.classList.toggle('hidden', node.getAttribute('data-level') !== String(level));
+  });
+  recomputeMax();
+  loadState();
+  updateScore();
+}
+
+/* -------- Checking -------- */
+function clearMarksInTask(task){
+  const taskEl = document.querySelector(`#task${task}`);
+  if(!taskEl) return;
+  taskEl.querySelectorAll('input[type="text"][data-id], textarea[data-id], select[data-id]').forEach(el=>{
+    el.classList.remove("correct","wrong");
+  });
+}
+
+function checkTask(task){
+  const level = getLevel();
+  saveState();
+  clearFeedback(task);
+  clearMarksInTask(task);
+
+  if(task === 1){
+    // 10 checks
+    const cfg = TASK1[level];
+    const pairs = [
+      ["usage1", cfg.usage1.sol],
+      ["usage2", cfg.usage2.sol],
+      ["reg", cfg.reg.sol],
+      ["qStart", cfg.qStart.sol],
+      ["neg", cfg.neg.sol],
+      ["base", cfg.base.sol],
+      ["be1", cfg.be1.sol],
+      ["be2", cfg.be2.sol],
+      ["sig1", cfg.sig1.sol],
+      ["sig2", cfg.sig2.sol],
+    ];
+
+    let got = 0;
+    pairs.forEach(([key, sol])=>{
+      const id = `t1_l${level}_${key}`;
+      const sel = document.querySelector(`select[data-id="${id}"]`);
+      const ok = normalize(sel.value) === normalize(sol);
+      markField(sel, ok);
+      if(ok) got++;
+    });
+
+    award(1, got);
+    showFeedback(1, resultLine(got, 10, "Tipp: Chorus (-ed), Verse (Did/didn’t) und Signalwörter (yesterday/last week/ago)."));
+    return;
+  }
+
+  if(task === 2){
+    const items = TASKS[2][level];
+    let got = 0;
+    items.forEach((it, idx)=>{
+      const id = `t2_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      const ok = normalize(inp.value) === normalize(it.sol);
+      markField(inp, ok);
+      if(ok) got++;
+    });
+    award(2, got);
+    showFeedback(2, resultLine(got, 10, "Achte auf Rechtschreibung: try→tried, study→studied, stop→stopped, plan→planned."));
+    return;
+  }
+
+  if(task === 3){
+    const items = TASKS[3][level];
+    let got = 0;
+    items.forEach((it, idx)=>{
+      const id = `t3_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      const ok = normalize(inp.value) === normalize(it.sol);
+      markField(inp, ok);
+      if(ok) got++;
+    });
+    award(3, got);
+    showFeedback(3, resultLine(got, 10, "Tipp: Unregelmäßige Formen musst du lernen (Song-Bridge hilft)."));
+    return;
+  }
+
+  if(task === 4){
+    const items = TASKS[4][level];
+    let got = 0;
+    items.forEach((it, idx)=>{
+      const id = `t4_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      const ok = normalize(inp.value) === normalize(it.sol);
+      markField(inp, ok);
+      if(ok) got++;
+    });
+    award(4, got);
+    showFeedback(4, resultLine(got, 10, "Wortstellung: Did + subject + base verb … ?"));
+    return;
+  }
+
+  if(task === 5){
+    const items = TASKS[5][level];
+    let got = 0;
+    items.forEach((it, idx)=>{
+      const id = `t5_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      const ok = normalize(inp.value) === normalize(it.sol);
+      markField(inp, ok);
+      if(ok) got++;
+    });
+    award(5, got);
+    showFeedback(5, resultLine(got, 10, "Bei didn’t bleibt das Verb Grundform. Bei be: was/were (oder wasn’t/weren’t)."));
+    return;
+  }
+}
+
+function solutionTask(task){
+  const level = getLevel();
+  clearFeedback(task);
+  clearMarksInTask(task);
+
+  if(task === 1){
+    const cfg = TASK1[level];
+    const fill = (key, sol)=>{
+      const id = `t1_l${level}_${key}`;
+      const sel = document.querySelector(`select[data-id="${id}"]`);
+      sel.value = sol;
+      markField(sel, true);
+    };
+
+    fill("usage1", cfg.usage1.sol);
+    fill("usage2", cfg.usage2.sol);
+    fill("reg", cfg.reg.sol);
+    fill("qStart", cfg.qStart.sol);
+    fill("neg", cfg.neg.sol);
+    fill("base", cfg.base.sol);
+    fill("be1", cfg.be1.sol);
+    fill("be2", cfg.be2.sol);
+    fill("sig1", cfg.sig1.sol);
+    fill("sig2", cfg.sig2.sol);
+
+    saveState();
+    showFeedback(1, `<strong>Musterlösung:</strong> Alle Lücken wurden eingesetzt und markiert.`);
+    return;
+  }
+
+  const fillSolutions = (taskNo, items) => {
+    items.forEach((it, idx)=>{
+      const id = `t${taskNo}_l${level}_q${idx+1}`;
+      const inp = document.querySelector(`[data-id="${id}"]`);
+      inp.value = it.sol;
+      markField(inp, true);
+    });
+    saveState();
+  };
+
+  if(task === 2){ fillSolutions(2, TASKS[2][level]); showFeedback(2, `<strong>Musterlösung:</strong> Alle Lösungen eingesetzt.`); return; }
+  if(task === 3){ fillSolutions(3, TASKS[3][level]); showFeedback(3, `<strong>Musterlösung:</strong> Alle Formen eingesetzt.`); return; }
+  if(task === 4){ fillSolutions(4, TASKS[4][level]); showFeedback(4, `<strong>Musterlösung:</strong> Alle Fragen eingesetzt.`); return; }
+  if(task === 5){ fillSolutions(5, TASKS[5][level]); showFeedback(5, `<strong>Musterlösung:</strong> Alle Lösungen eingesetzt.`); return; }
+}
+
+function init(){
+  // Render Aufgabe 1 for all levels in the Simple-Present layout
+  [1,2,3].forEach(l=> renderTask1LikeSimplePresent(l));
+
+  // Render other tasks
+  [1,2,3].forEach(l=> renderFill(`t2_l${l}`, TASKS[2][l], `t2_l${l}`));
+  [1,2,3].forEach(l=> renderVerbList(`t3_l${l}`, TASKS[3][l], `t3_l${l}`));
+  [1,2,3].forEach(l=> renderQuestions(`t4_l${l}`, TASKS[4][l], `t4_l${l}`));
+  [1,2,3].forEach(l=> renderMixed(`t5_l${l}`, TASKS[5][l], `t5_l${l}`));
+
+  loadState();
+  recomputeMax();
+  setLevel(getLevel());
+  updateScore();
+}
+
+/* -------- Events -------- */
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest('[data-action]');
+  if(btn){
+    const action = btn.dataset.action;
+
+    if(action === 'toggleHelp'){
+      const target = btn.dataset.target;
+      const el = document.getElementById(target);
+      el.classList.toggle('hidden');
+      btn.textContent = el.classList.contains('hidden') ? "Merkkasten anzeigen" : "Merkkasten ausblenden";
+      return;
+    }
+    if(action === 'check'){
+      checkTask(Number(btn.dataset.task));
+      return;
+    }
+    if(action === 'solution'){
+      solutionTask(Number(btn.dataset.task));
+      return;
+    }
+  }
+});
+
+document.addEventListener('input', (e)=>{
+  const t = e.target;
+  if(t.matches('input[type="text"][data-id], textarea[data-id]')) saveState();
+});
+document.addEventListener('change', (e)=>{
+  const t = e.target;
+  if(t.matches('select[data-id]')) saveState();
+});
+
+$('#level').addEventListener('change', ()=> setLevel(getLevel()));
+$('#btnSave').addEventListener('click', ()=> { saveState(); alert("Gespeichert ✅"); });
+$('#btnReset').addEventListener('click', resetAll);
+
+$('#btnCheckAll').addEventListener('click', ()=>{ [1,2,3,4,5].forEach(checkTask); });
+$('#btnShowAll').addEventListener('click', ()=>{ [1,2,3,4,5].forEach(solutionTask); });
+
+init();
+</script>
+</body>
+</html>
