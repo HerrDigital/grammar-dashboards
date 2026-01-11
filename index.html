@@ -339,9 +339,6 @@
       </div>
     </div>
 
-    <a class="btn secondary" href="./dashboards/present-perfect.html">
-      ↗ Direkt zum aktuellen Dashboard
-    </a>
   </header>
 
   <main class="grid">
@@ -412,13 +409,13 @@
             <div class="dashCard">
               <div class="dashActions" style="justify-content:space-between;margin-bottom:6px;">
                 <div class="dashTitle">Simple Past</div>
-                <span class="tag">Coming soon</span>
+                <span class="tag live">LIVE</span>
               </div>
               <p class="dashDesc">
                 regelmäßige/unregelmäßige Verben · Zeitangaben
               </p>
               <div class="dashActions">
-                <span class="btn disabled">Bald verfügbar</span>
+                <a class="btn primary" href="./dashboards/simple-past.html">Dashboard öffnen</a>
               </div>
             </div>
 
@@ -428,7 +425,7 @@
                 <span class="tag">Coming soon</span>
               </div>
               <p class="dashDesc">
-                Type 1 (später evtl. 2/3) · Satzbau · Fehlerquellen
+                Type 1, 2, 3 · Satzbau · Fehlerquellen
               </p>
               <div class="dashActions">
                 <span class="btn disabled">Bald verfügbar</span>
@@ -448,48 +445,87 @@
 
     </section>
 
-    <!-- RIGHT -->
-    <aside class="card">
-      <h2>Schnellzugriff & Teilen</h2>
+<!-- RIGHT -->
+<aside class="card">
+  <h2>Für Lehrkräfte</h2>
 
-      <div class="dashCard" style="background:linear-gradient(180deg,var(--petrolSoft) 0%,#fff 70%);">
-        <div class="dashTitle">Aktuell: Present Perfect</div>
-        <p class="dashDesc">Direkt starten oder mit der Klasse teilen.</p>
-        <div class="dashActions">
-          <a class="btn primary" href="./dashboards/present-perfect.html">Öffnen</a>
-        </div>
+  <div class="dashCard"
+       style="background:linear-gradient(180deg,var(--petrolSoft) 0%,#fff 70%);">
+    <div class="dashTitle">Didaktisches Konzept</div>
+    <p class="dashDesc">
+      Die Übungsdashboards sind für den <strong>selbstständigen und
+      differenzierten Grammatikunterricht</strong> konzipiert.
+      Alle Aufgaben enthalten eine <strong>unmittelbare Selbstkontrolle</strong>
+      und sind ohne Login nutzbar.
+    </p>
+  </div>
+
+  <div class="dashCard">
+    <div class="dashTitle">Einsatz im Unterricht</div>
+    <p class="dashDesc">
+      <strong>1.</strong> Dashboard auswählen und Link teilen<br>
+      <strong>2.</strong> Schülerinnen und Schüler wählen ihr Niveau<br>
+      <strong>3.</strong> Ergebnisse direkt überprüfen und sichern
+    </p>
+    <p class="dashDesc">
+      Ideal für <strong>Übungsphasen</strong>, <strong>Wochenplanarbeit</strong>,
+      <strong>Vertretungsstunden</strong> oder <strong>Flipped Classroom</strong>.
+    </p>
+  </div>
+
+  <div class="dashCard">
+    <div class="dashTitle">Differenzierung & Kontrolle</div>
+    <p class="dashDesc">
+      • drei Niveaustufen pro Thema<br>
+      • sofortiges Feedback ohne Lehrereingriff<br>
+      • Bearbeitung direkt im Browser (iPad / PC / Smartphone)
+    </p>
+  </div>
+
+  <div class="dashCard"
+       style="background:linear-gradient(180deg,var(--panel2) 0%,#fff 80%);">
+    <div class="dashTitle">Material & Ergänzungen</div>
+    <p class="dashDesc">
+      Begleitmaterialien, Arbeitsblätter und Unterrichtsideen
+      sind perspektivisch geplant.
+    </p>
+    <div class="dashActions">
+      <a class="btn secondary"
+         href="https://www.eduki.com"
+         target="_blank" rel="noopener">
+        Materialien auf Eduki
+      </a>
+    </div>
+  </div>
+
+  <div class="hint" style="margin-top:12px;">
+    Ergänzend nutzbar:<br>
+    <a href="https://open.spotify.com/intl-de/artist/7IYyo3ycDI6HOa5M5TB62F"
+       target="_blank" rel="noopener">
+      Grammar-Songs auf Spotify
+    </a>
+  </div>
+  <div class="dashCard" style="margin-top:12px;">
+  <div class="dashTitle">Link für die Klasse</div>
+  <p class="dashDesc">
+    Einstieg für Schülerinnen und Schüler (z. B. per Beamer oder iPad).
+  </p>
+
+  <div style="display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center;">
+    <img
+      src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://herrdigital.netlify.app/"
+      alt="QR-Code zur Übersicht"
+      style="width:110px;height:110px;border-radius:14px;border:1px solid var(--line);background:var(--panel2);padding:6px"
+    >
+    <div>
+      <div class="tag" style="margin-bottom:6px;">Übersichtsseite</div>
+      <div class="hint" style="margin:0;word-break:break-all;">
+        https://herrdigital.netlify.app/
       </div>
-
-      <!-- SHARE -->
-      <div class="dashCard" style="margin-top:12px;">
-        <div class="dashTitle">Teilen (QR / Link)</div>
-        <p class="dashDesc">QR scannen oder Link kopieren</p>
-
-        <div class="dashActions" style="margin-bottom:10px;">
-          <button class="btn secondary" id="btnShare">Teilen</button>
-          <button class="btn" id="btnCopy">Link kopieren</button>
-        </div>
-
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:12px;align-items:center;">
-          <img id="qrImg" alt="QR-Code zum Dashboard"
-               style="width:120px;height:120px;border-radius:14px;border:1px solid var(--line);background:var(--panel2);padding:8px">
-          <div>
-            <div class="tag" style="margin-bottom:8px;">Dashboard-Link</div>
-            <div class="hint" style="margin:0;">
-              <span class="mono" id="shareLink" style="word-break:break-all;"></span>
-            </div>
-            <div class="hint" id="copyStatus" style="margin-top:8px;"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hint" style="margin-top:12px;">
-        Grammar-Songs:<br>
-        <a href="https://open.spotify.com/intl-de/artist/7IYyo3ycDI6HOa5M5TB62F" target="_blank" rel="noopener">
-          Artist-Profil auf Spotify
-        </a>
-      </div>
-    </aside>
+    </div>
+  </div>
+</div>
+</aside>
 
   </main>
 
@@ -506,59 +542,9 @@
 
 </div>
 
-<script>
-(function(){
-  const overviewUrl = window.location.origin + "/index.html";
-
-
-  const linkEl = document.getElementById("shareLink");
-  if(linkEl) linkEl.textContent = overviewUrl;
-
-  const qrImg = document.getElementById("qrImg");
-  if(qrImg){
-    qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data="
-      + encodeURIComponent(overviewUrl);
-  }
-
-  const statusEl = document.getElementById("copyStatus");
-
-  const copyBtn = document.getElementById("btnCopy");
-  if(copyBtn){
-    copyBtn.addEventListener("click", async ()=>{
-      try{
-        await navigator.clipboard.writeText(overviewUrl);
-        statusEl.innerHTML = '<span style="color:#1f9d55;font-weight:800;">✔ Link kopiert.</span>';
-      }catch{
-        window.prompt("Link kopieren:", overviewUrl);
-      }
-    });
-  }
-
-  const shareBtn = document.getElementById("btnShare");
-  if(shareBtn){
-    shareBtn.addEventListener("click", async ()=>{
-      if(navigator.share){
-        try{
-          await navigator.share({
-            title:"Present Perfect – Übungsdashboard",
-            url:overviewUrl
-          });
-        }catch{}
-      }else{
-        try{
-          await navigator.clipboard.writeText(overviewUrl);
-          statusEl.innerHTML = '<span style="color:#1f9d55;font-weight:800;">✔ Link kopiert.</span>';
-        }catch{
-          window.prompt("Teilen nicht verfügbar. Link:", overviewUrl);
-        }
-      }
-    });
-  }
-})();
-</script>
-
 </body>
 </html>
+
 
 
 
